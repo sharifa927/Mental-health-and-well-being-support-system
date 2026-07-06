@@ -1,0 +1,89 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}Admin Dashboard - Mental Health Support{% endblock %}
+
+{% block content %}
+<div class="container">
+    <div class="row">
+        <div class="col-12">
+            <h2 class="mb-4"><i class="fas fa-user-shield text-primary"></i> Admin Dashboard</h2>
+        </div>
+    </div>
+
+    <!-- Stats -->
+    <div class="row mb-4">
+        <div class="col-md-3 col-6 mb-3">
+            <div class="card bg-primary text-white stat-card">
+                <div class="card-body">
+                    <h5 class="card-title"><i class="fas fa-users"></i> Users</h5>
+                    <h2 class="mb-0">156</h2>
+                    <small>Total registered</small>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-3 col-6 mb-3">
+            <div class="card bg-success text-white stat-card">
+                <div class="card-body">
+                    <h5 class="card-title"><i class="fas fa-user-md"></i> Counselors</h5>
+                    <h2 class="mb-0">12</h2>
+                    <small>Active counselors</small>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-3 col-6 mb-3">
+            <div class="card bg-info text-white stat-card">
+                <div class="card-body">
+                    <h5 class="card-title"><i class="fas fa-calendar-check"></i> Appointments</h5>
+                    <h2 class="mb-0">45</h2>
+                    <small>This month</small>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-3 col-6 mb-3">
+            <div class="card bg-warning text-white stat-card">
+                <div class="card-body">
+                    <h5 class="card-title"><i class="fas fa-book"></i> Resources</h5>
+                    <h2 class="mb-0">23</h2>
+                    <small>Total resources</small>
+                </div>
+            </div>
+        </div>
+    </div>
+
+   <!-- Management Cards -->
+<div class="row">
+    <div class="col-12">
+        <h4 class="mb-3"><i class="fas fa-cogs text-primary"></i> System Management</h4>
+    </div>
+</div>
+
+<div class="row g-3 mb-4">
+    <div class="col-md-3 col-6">
+        <a href="/admin-users/" class="btn btn-outline-primary w-100 py-3">
+            <i class="fas fa-users fa-2x d-block mb-2"></i>
+            Manage Users
+        </a>
+    </div>
+    <div class="col-md-3 col-6">
+        <a href="/admin-counselors/" class="btn btn-outline-success w-100 py-3">
+            <i class="fas fa-user-md fa-2x d-block mb-2"></i>
+            Manage Counselors
+        </a>
+    </div>
+    <div class="col-md-3 col-6">
+        <a href="/admin-resources/" class="btn btn-outline-info w-100 py-3">
+            <i class="fas fa-book fa-2x d-block mb-2"></i>
+            Manage Resources
+        </a>
+    </div>
+    <div class="col-md-3 col-6">
+        <a href="/admin-quotes/" class="btn btn-outline-warning w-100 py-3">
+            <i class="fas fa-quote-right fa-2x d-block mb-2"></i>
+            Manage Quotes
+        </a>
+    </div>
+</div>
+    </div>
+</div>
+{% endblock %}

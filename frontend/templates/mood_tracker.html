@@ -1,0 +1,188 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}Mood Tracker - Mental Health Support{% endblock %}
+
+{% block content %}
+<div class="container">
+    <div class="row">
+        <div class="col-12">
+            <h2 class="mb-4"><i class="fas fa-chart-line text-primary"></i> Mood Tracker</h2>
+        </div>
+    </div>
+
+    <div class="row">
+        <!-- Mood Entry Form -->
+        <div class="col-md-5 mb-4">
+            <div class="card shadow-lg border-0">
+                <div class="card-header bg-primary text-white">
+                    <h5 class="mb-0"><i class="fas fa-edit"></i> How are you feeling today?</h5>
+                </div>
+                <div class="card-body p-4">
+                    <form method="post" action="{% url 'mood_tracker' %}">
+                        {% csrf_token %}
+                        
+                        <div class="mb-4">
+                            <label class="form-label fw-bold">Select your mood</label>
+                            <div class="row g-2">
+                                <div class="col-4">
+                                    <button type="button" class="btn btn-success w-100 mood-btn" data-mood="happy">
+                                        <i class="fas fa-smile fa-2x d-block"></i>
+                                        <small>Happy</small>
+                                    </button>
+                                </div>
+                                <div class="col-4">
+                                    <button type="button" class="btn btn-info w-100 mood-btn" data-mood="calm">
+                                        <i class="fas fa-heart fa-2x d-block"></i>
+                                        <small>Calm</small>
+                                    </button>
+                                </div>
+                                <div class="col-4">
+                                    <button type="button" class="btn btn-secondary w-100 mood-btn" data-mood="neutral">
+                                        <i class="fas fa-meh fa-2x d-block"></i>
+                                        <small>Neutral</small>
+                                    </button>
+                                </div>
+                                <div class="col-4">
+                                    <button type="button" class="btn btn-warning w-100 mood-btn" data-mood="stressed">
+                                        <i class="fas fa-exclamation-triangle fa-2x d-block"></i>
+                                        <small>Stressed</small>
+                                    </button>
+                                </div>
+                                <div class="col-4">
+                                    <button type="button" class="btn btn-primary w-100 mood-btn" data-mood="sad">
+                                        <i class="fas fa-frown fa-2x d-block"></i>
+                                        <small>Sad</small>
+                                    </button>
+                                </div>
+                                <div class="col-4">
+                                    <button type="button" class="btn btn-danger w-100 mood-btn" data-mood="anxious">
+                                        <i class="fas fa-flushed fa-2x d-block"></i>
+                                        <small>Anxious</small>
+                                    </button>
+                                </div>
+                            </div>
+                            <input type="hidden" id="selectedMood" name="mood" value="">
+                        </div>
+
+                        <div class="mb-3">
+                            <label for="moodNote" class="form-label">Add a note (optional)</label>
+                            <textarea class="form-control" id="moodNote" name="note" rows="3" placeholder="How are you feeling? What's on your mind?"></textarea>
+                        </div>
+
+                        <button type="submit" class="btn btn-primary w-100">
+                            <i class="fas fa-save"></i> Save Mood Entry
+                        </button>
+                    </form>
+                </div>
+            </div>
+        </div>
+
+        <!-- Mood History -->
+        <div class="col-md-7 mb-4">
+            <div class="card shadow-lg border-0">
+                <div class="card-header bg-white">
+                    <h5 class="mb-0"><i class="fas fa-history text-primary"></i> Mood History</h5>
+                </div>
+                <div class="card-body p-4">
+                    <!-- Chart -->
+                    <canvas id="moodChart" height="200"></canvas>
+                    
+                    <hr>
+                    
+                    <!-- Recent entries -->
+                    <h6 class="fw-bold mt-3">Recent Entries</h6>
+                    <div class="mood-entries">
+                        <div class="d-flex justify-content-between align-items-center border-bottom py-2">
+                            <div>
+                                <span class="badge bg-success">Happy</span>
+                                <span class="text-muted small ms-2">Today, 2:30 PM</span>
+                            </div>
+                            <span class="text-muted small">Feeling great today!</span>
+                        </div>
+                        <div class="d-flex justify-content-between align-items-center border-bottom py-2">
+                            <div>
+                                <span class="badge bg-warning">Stressed</span>
+                                <span class="text-muted small ms-2">Yesterday, 8:15 PM</span>
+                            </div>
+                            <span class="text-muted small">Had a lot of work</span>
+                        </div>
+                        <div class="d-flex justify-content-between align-items-center border-bottom py-2">
+                            <div>
+                                <span class="badge bg-primary">Calm</span>
+                                <span class="text-muted small ms-2">2 days ago, 9:00 AM</span>
+                            </div>
+                            <span class="text-muted small">Relaxed morning</span>
+                        </div>
+                        <div class="d-flex justify-content-between align-items-center py-2">
+                            <div>
+                                <span class="badge bg-success">Happy</span>
+                                <span class="text-muted small ms-2">3 days ago, 4:45 PM</span>
+                            </div>
+                            <span class="text-muted small">Great weekend!</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block extra_js %}
+<script>
+// Mood selection
+document.querySelectorAll('.mood-btn').forEach(function(btn) {
+    btn.addEventListener('click', function() {
+        // Remove active class from all buttons
+        document.querySelectorAll('.mood-btn').forEach(function(b) {
+            b.classList.remove('active');
+        });
+        
+        // Add active class to selected button
+        this.classList.add('active');
+        
+        // Set hidden input value
+        document.getElementById('selectedMood').value = this.dataset.mood;
+    });
+});
+
+// Chart.js for mood visualization
+const ctx = document.getElementById('moodChart').getContext('2d');
+const moodChart = new Chart(ctx, {
+    type: 'line',
+    data: {
+        labels: ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'],
+        datasets: [{
+            label: 'Mood Level',
+            data: [4, 3, 2, 3, 4, 5, 4],
+            borderColor: '#0d6efd',
+            backgroundColor: 'rgba(13, 110, 253, 0.1)',
+            tension: 0.4,
+            fill: true
+        }]
+    },
+    options: {
+        responsive: true,
+        plugins: {
+            legend: {
+                display: false
+            }
+        },
+        scales: {
+            y: {
+                min: 0,
+                max: 5,
+                ticks: {
+                    stepSize: 1,
+                    callback: function(value) {
+                        const moods = ['', 'Sad', 'Stressed', 'Neutral', 'Calm', 'Happy'];
+                        return moods[value] || '';
+                    }
+                }
+            }
+        }
+    }
+});
+</script>
+{% endblock %}

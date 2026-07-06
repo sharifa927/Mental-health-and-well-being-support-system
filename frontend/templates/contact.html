@@ -1,0 +1,175 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}Contact Us - Mental Health Support{% endblock %}
+
+{% block content %}
+<div class="container">
+    <!-- Page Header -->
+    <div class="row">
+        <div class="col-12">
+            <h2 class="mb-4"><i class="fas fa-envelope text-primary"></i> Contact Us</h2>
+            <p class="text-muted">We'd love to hear from you. Reach out to us with any questions, feedback or concerns</p>
+        </div>
+    </div>
+
+    <div class="row">
+        <!-- Contact Form -->
+        <div class="col-lg-6 mb-4">
+            <div class="card shadow-sm border-0">
+                <div class="card-header bg-primary text-white">
+                    <h5 class="mb-0"><i class="fas fa-paper-plane"></i> Send Us a Message</h5>
+                </div>
+                <div class="card-body p-4">
+                    <form method="post" action="/contact/">
+                        {% csrf_token %}
+                        
+                        <div class="mb-3">
+                            <label for="name" class="form-label fw-bold">Full Name</label>
+                            <input type="text" class="form-control" id="name" name="name" placeholder="Enter your full name" required>
+                        </div>
+                        
+                        <div class="mb-3">
+                            <label for="email" class="form-label fw-bold">Email Address</label>
+                            <input type="email" class="form-control" id="email" name="email" placeholder="Enter your email address" required>
+                        </div>
+                        
+                        <div class="mb-3">
+                            <label for="subject" class="form-label fw-bold">Subject</label>
+                            <select class="form-select" id="subject" name="subject" required>
+                                <option value="">Select a subject...</option>
+                                <option value="general">General Inquiry</option>
+                                <option value="support">Technical Support</option>
+                                <option value="feedback">Feedback</option>
+                                <option value="appointment">Appointment Question</option>
+                                <option value="other">Other</option>
+                            </select>
+                        </div>
+                        
+                        <div class="mb-3">
+                            <label for="message" class="form-label fw-bold">Message</label>
+                            <textarea class="form-control" id="message" name="message" rows="5" placeholder="Write your message here..." required></textarea>
+                        </div>
+                        
+                        <button type="submit" class="btn btn-primary w-100 py-2">
+                            <i class="fas fa-paper-plane"></i> Send Message
+                        </button>
+                    </form>
+                </div>
+            </div>
+        </div>
+
+        <!-- Contact Information -->
+        <div class="col-lg-6 mb-4">
+            <div class="card shadow-sm border-0">
+                <div class="card-header bg-primary text-white">
+                    <h5 class="mb-0"><i class="fas fa-address-card"></i> Contact Information</h5>
+                </div>
+                <div class="card-body p-4">
+                    <h5 class="text-primary"><i class="fas fa-map-marker-alt"></i> Our Location</h5>
+                    <p class="text-muted">
+                        State University of Zanzibar (SUZA)<br>
+                        School of Computing, Communication and Media Studies<br>
+                        Department of Computer Science & Information Technology<br>
+                        Zanzibar, Tanzania
+                    </p>
+
+                    <hr>
+
+                    <h5 class="text-primary"><i class="fas fa-phone"></i> Phone</h5>
+                    <p class="text-muted">
+                        <strong>Main Office:</strong> +255 657 848 032<br>
+                        <strong>Other:</strong> +255 126 256 754
+                    </p>
+
+                    <hr>
+
+                    <h5 class="text-primary"><i class="fas fa-envelope"></i> Email</h5>
+                    <p class="text-muted">
+                        <strong>General Inquiries:</strong> info@mentalhealth.com<br>
+                        <strong>Support:</strong> support@mentalhealth.com<br>
+                        <strong>Feedback:</strong> feedback@mentalhealth.com
+                    </p>
+
+                    <hr>
+
+                    <h5 class="text-primary"><i class="fas fa-clock"></i> Working Hours</h5>
+                    <p class="text-muted">
+                        <strong>Monday - Friday:</strong> 8:00 AM - 6:00 PM<br>
+                        <strong>Saturday:</strong> 9:00 AM - 2:00 PM<br>
+                        <strong>Sunday:</strong> Closed
+                    </p>
+
+                    <hr>
+
+                    <div class="text-center">
+                        <h5 class="text-primary"><i class="fas fa-share-alt"></i> Follow Us</h5>
+                        <div class="social-icons">
+                            <a href="#" class="btn btn-outline-primary btn-sm me-2">
+                                <i class="fab fa-facebook"></i>
+                            </a>
+                            <a href="#" class="btn btn-outline-info btn-sm me-2">
+                                <i class="fab fa-twitter"></i>
+                            </a>
+                            <a href="#" class="btn btn-outline-danger btn-sm me-2">
+                                <i class="fab fa-instagram"></i>
+                            </a>
+                            <a href="#" class="btn btn-outline-danger btn-sm me-2">
+                                <i class="fab fa-youtube"></i>
+                            </a>
+                            <a href="#" class="btn btn-outline-success btn-sm">
+                                <i class="fab fa-whatsapp"></i>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Map / Location -->
+    <div class="row mt-4">
+        <div class="col-12">
+            <div class="card shadow-sm border-0">
+                <div class="card-body text-center py-4">
+                    <h5 class="text-primary"><i class="fas fa-map"></i> Find Us</h5>
+                    <p class="text-muted">State University of Zanzibar, Zanzibar, Tanzania</p>
+                    <!-- Google Maps Embed (Optional) -->
+                    <div class="ratio ratio-16x9" style="max-height: 300px;">
+                        <iframe 
+                            src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d1269.5!2d39.1989!3d-6.1659!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x185c7b8b0a0a0a0a%3A0x0!2zNsKwMDknNTcuMyJTIDM5wrAxMSc1Ni4wIkU!5e0!3m2!1sen!2stz!4v1700000000000" 
+                            width="100%" 
+                            height="100%" 
+                            style="border:0;" 
+                            allowfullscreen="" 
+                            loading="lazy" 
+                            referrerpolicy="no-referrer-when-downgrade">
+                        </iframe>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block extra_js %}
+<script>
+// Form validation feedback
+document.addEventListener('DOMContentLoaded', function() {
+    const form = document.querySelector('form');
+    if (form) {
+        form.addEventListener('submit', function(e) {
+            const name = document.getElementById('name').value.trim();
+            const email = document.getElementById('email').value.trim();
+            const message = document.getElementById('message').value.trim();
+            
+            if (!name || !email || !message) {
+                e.preventDefault();
+                alert('Please fill in all required fields.');
+            }
+        });
+    }
+});
+</script>
+{% endblock %}

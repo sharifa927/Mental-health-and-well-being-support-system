@@ -1,0 +1,114 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}Resources - Mental Health Support{% endblock %}
+
+{% block content %}
+<div class="container">
+    <div class="row">
+        <div class="col-12">
+            <h2 class="mb-4"><i class="fas fa-book text-primary"></i> Educational Resources</h2>
+        </div>
+    </div>
+
+    <div class="row mb-4">
+        <div class="col-12">
+            <div class="card shadow-sm border-0">
+                <div class="card-body">
+                    <div class="row g-3">
+                        <div class="col-md-6">
+                            <input type="text" class="form-control" placeholder="Search resources...">
+                        </div>
+                        <div class="col-md-4">
+                            <select class="form-select">
+                                <option>All Categories</option>
+                                <option>Articles</option>
+                                <option>Videos</option>
+                                <option>PDF Guides</option>
+                                <option>Audio</option>
+                            </select>
+                        </div>
+                        <div class="col-md-2">
+                            <button class="btn btn-primary w-100"><i class="fas fa-search"></i> Search</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="row">
+        <!-- Resource 1 -->
+        <div class="col-md-4 mb-4">
+            <div class="card shadow-sm h-100">
+                <div class="card-body">
+                    <span class="badge bg-primary mb-2">Article</span>
+                    <h5 class="card-title">Understanding Anxiety</h5>
+                    <p class="card-text text-muted">Learn about the causes, symptoms, and management strategies for anxiety disorders.</p>
+                    <a href="#" class="btn btn-outline-primary btn-sm">Read More <i class="fas fa-arrow-right"></i></a>
+                </div>
+            </div>
+        </div>
+
+        <!-- Resource 2 -->
+        <div class="col-md-4 mb-4">
+            <div class="card shadow-sm h-100">
+                <div class="card-body">
+                    <span class="badge bg-success mb-2">Video</span>
+                    <h5 class="card-title">5-Minute Meditation</h5>
+                    <p class="card-text text-muted">A guided meditation session to help you relax and reduce stress.</p>
+                    <a href="#" class="btn btn-outline-primary btn-sm">Watch Now <i class="fas fa-arrow-right"></i></a>
+                </div>
+            </div>
+        </div>
+
+        <!-- Resource 3 -->
+        <div class="col-md-4 mb-4">
+            <div class="card shadow-sm h-100">
+                <div class="card-body">
+                    <span class="badge bg-info mb-2">PDF Guide</span>
+                    <h5 class="card-title">Stress Management Workbook</h5>
+                    <p class="card-text text-muted">A comprehensive workbook with exercises to help you manage stress effectively.</p>
+                    <a href="#" class="btn btn-outline-primary btn-sm">Download <i class="fas fa-arrow-right"></i></a>
+                </div>
+            </div>
+        </div>
+
+        <!-- Resource 4 -->
+        <div class="col-md-4 mb-4">
+            <div class="card shadow-sm h-100">
+                <div class="card-body">
+                    <span class="badge bg-warning mb-2">Article</span>
+                    <h5 class="card-title">Building Resilience</h5>
+                    <p class="card-text text-muted">Strategies to develop mental resilience and cope with life's challenges.</p>
+                    <a href="#" class="btn btn-outline-primary btn-sm">Read More <i class="fas fa-arrow-right"></i></a>
+                </div>
+            </div>
+        </div>
+
+        <!-- Resource 5 -->
+        <div class="col-md-4 mb-4">
+            <div class="card shadow-sm h-100">
+                <div class="card-body">
+                    <span class="badge bg-danger mb-2">Video</span>
+                    <h5 class="card-title">Coping with Depression</h5>
+                    <p class="card-text text-muted">Expert advice and practical tips for managing depression symptoms.</p>
+                    <a href="#" class="btn btn-outline-primary btn-sm">Watch Now <i class="fas fa-arrow-right"></i></a>
+                </div>
+            </div>
+        </div>
+
+        <!-- Resource 6 -->
+        <div class="col-md-4 mb-4">
+            <div class="card shadow-sm h-100">
+                <div class="card-body">
+                    <span class="badge bg-secondary mb-2">Audio</span>
+                    <h5 class="card-title">Sleep Better Tonight</h5>
+                    <p class="card-text text-muted">Guided audio session to improve your sleep quality and relaxation.</p>
+                    <a href="#" class="btn btn-outline-primary btn-sm">Listen <i class="fas fa-arrow-right"></i></a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

@@ -1,0 +1,179 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}Dashboard - Mental Health Support{% endblock %}
+
+{% block content %}
+<div class="container">
+    <div class="row">
+        <div class="col-12">
+            <h2 class="mb-4"><i class="fas fa-home"></i> Welcome back, Sharifa!</h2>
+        </div>
+    </div>
+
+    <!-- Stats Cards -->
+    <div class="row mb-4">
+        <div class="col-md-3 col-6 mb-3">
+            <div class="card bg-primary text-white stat-card">
+                <div class="card-body">
+                    <h5 class="card-title"><i class="fas fa-heart"></i> Mood Score</h5>
+                    <h2 class="mb-0">75%</h2>
+                    <small>Last 30 days</small>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-3 col-6 mb-3">
+            <div class="card bg-success text-white stat-card">
+                <div class="card-body">
+                    <h5 class="card-title"><i class="fas fa-clipboard-check"></i> Assessments</h5>
+                    <h2 class="mb-0">3</h2>
+                    <small>Total completed</small>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-3 col-6 mb-3">
+            <div class="card bg-info text-white stat-card">
+                <div class="card-body">
+                    <h5 class="card-title"><i class="fas fa-calendar-check"></i> Appointments</h5>
+                    <h2 class="mb-0">2</h2>
+                    <small>Upcoming</small>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-3 col-6 mb-3">
+            <div class="card bg-warning text-white stat-card">
+                <div class="card-body">
+                    <h5 class="card-title"><i class="fas fa-tasks"></i> Resources</h5>
+                    <h2 class="mb-0">5</h2>
+                    <small>Viewed this week</small>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Daily Quote -->
+    <div class="row mb-4">
+        <div class="col-12">
+            <div class="card bg-light border-0">
+                <div class="card-body text-center">
+                    <i class="fas fa-quote-left fa-2x text-primary mb-2"></i>
+                    <blockquote class="blockquote">
+                        <p class="mb-0 fs-5">"The only way out of the darkness is to keep moving forward."</p>
+                        <footer class="blockquote-footer mt-2">Anonymous</footer>
+                    </blockquote>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Recent Activity -->
+    <div class="row">
+        <div class="col-md-6 mb-4">
+            <div class="card shadow-sm">
+                <div class="card-header bg-white">
+                    <h5 class="mb-0"><i class="fas fa-chart-line text-primary"></i> Recent Mood</h5>
+                </div>
+                <div class="card-body">
+                    <div class="mood-entries">
+                        <div class="d-flex justify-content-between mb-2">
+                            <span>Today</span>
+                            <span class="badge bg-success">Happy</span>
+                        </div>
+                        <div class="d-flex justify-content-between mb-2">
+                            <span>Yesterday</span>
+                            <span class="badge bg-warning">Neutral</span>
+                        </div>
+                        <div class="d-flex justify-content-between mb-2">
+                            <span>2 days ago</span>
+                            <span class="badge bg-primary">Calm</span>
+                        </div>
+                        <div class="d-flex justify-content-between">
+                            <span>3 days ago</span>
+                            <span class="badge bg-success">Happy</span>
+                        </div>
+                    </div>
+                    <a href="/mood-tracker/" class="btn btn-outline-primary btn-sm mt-3">
+                        View All Moods <i class="fas fa-arrow-right"></i>
+                    </a>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-6 mb-4">
+            <div class="card shadow-sm">
+                <div class="card-header bg-white">
+                    <h5 class="mb-0"><i class="fas fa-calendar text-primary"></i> Upcoming Appointments</h5>
+                </div>
+                <div class="card-body">
+                    <div class="appointment-item border-bottom pb-2 mb-2">
+                        <div class="d-flex justify-content-between">
+                            <div>
+                                <strong>Amina Ali</strong>
+                                <p class="mb-0 text-muted small">Mental Health Counselor</p>
+                            </div>
+                            <div class="text-end">
+                                <span class="badge bg-success">Approved</span>
+                                <p class="mb-0 small">Today, 3:00 PM</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="appointment-item border-bottom pb-2 mb-2">
+                        <div class="d-flex justify-content-between">
+                            <div>
+                                <strong>Fatma Juma</strong>
+                                <p class="mb-0 text-muted small">Therapist</p>
+                            </div>
+                            <div class="text-end">
+                                <span class="badge bg-warning">Pending</span>
+                                <p class="mb-0 small">Tomorrow, 10:00 AM</p>
+                            </div>
+                        </div>
+                    </div>
+                    <a href="/appointments/" class="btn btn-outline-primary btn-sm mt-3">
+                        View All Appointments <i class="fas fa-arrow-right"></i>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Quick Actions -->
+    <div class="row">
+        <div class="col-12">
+            <div class="card shadow-sm">
+                <div class="card-header bg-white">
+                    <h5 class="mb-0"><i class="fas fa-rocket text-primary"></i> Quick Actions</h5>
+                </div>
+                <div class="card-body">
+                    <div class="row g-3">
+                        <div class="col-md-3 col-6">
+                            <a href="/assessment/" class="btn btn-primary w-100">
+                                <i class="fas fa-clipboard-list"></i><br>
+                                <small>Assessment</small>
+                            </a>
+                        </div>
+                        <div class="col-md-3 col-6">
+                            <a href="/mood-tracker/" class="btn btn-success w-100">
+                                <i class="fas fa-smile"></i><br>
+                                <small>Mood Tracker</small>
+                            </a>
+                        </div>
+                        <div class="col-md-3 col-6">
+                            <a href="/counselors/" class="btn btn-info w-100">
+                                <i class="fas fa-user-md"></i><br>
+                                <small>Find Counselor</small>
+                            </a>
+                        </div>
+                        <div class="col-md-3 col-6">
+                            <a href="/resources/" class="btn btn-warning w-100">
+                                <i class="fas fa-book"></i><br>
+                                <small>Resources</small>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

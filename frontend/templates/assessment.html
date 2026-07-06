@@ -1,0 +1,167 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}Self-Assessment - Mental Health Support{% endblock %}
+
+{% block content %}
+<div class="container">
+    <div class="row">
+        <div class="col-12">
+            <h2 class="mb-4"><i class="fas fa-clipboard-list text-primary"></i> Mental Health Self-Assessment</h2>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-lg-8 mx-auto">
+            <div class="card shadow-lg border-0">
+                <div class="card-header bg-primary text-white">
+                    <h5 class="mb-0"><i class="fas fa-edit"></i> Assessment Questionnaire</h5>
+                </div>
+                <div class="card-body p-4">
+                    <div class="progress mb-4">
+                        <div class="progress-bar" role="progressbar" style="width: 0%;" id="progressBar">0%</div>
+                    </div>
+
+                    <form id="assessmentForm" method="post" action="{% url 'assessment' %}">
+                        {% csrf_token %}
+                        
+                        <!-- Question 1 -->
+                        <div class="question-item mb-4">
+                            <h6 class="fw-bold">1. How often have you felt stressed in the past 2 weeks?</h6>
+                            <div class="form-check">
+                                <input class="form-check-input" type="radio" name="q1" id="q1_1" value="0">
+                                <label class="form-check-label" for="q1_1">Not at all</label>
+                            </div>
+                            <div class="form-check">
+                                <input class="form-check-input" type="radio" name="q1" id="q1_2" value="1">
+                                <label class="form-check-label" for="q1_2">Several days</label>
+                            </div>
+                            <div class="form-check">
+                                <input class="form-check-input" type="radio" name="q1" id="q1_3" value="2">
+                                <label class="form-check-label" for="q1_3">More than half the days</label>
+                            </div>
+                            <div class="form-check">
+                                <input class="form-check-input" type="radio" name="q1" id="q1_4" value="3">
+                                <label class="form-check-label" for="q1_4">Nearly every day</label>
+                            </div>
+                        </div>
+
+                        <!-- Question 2 -->
+                        <div class="question-item mb-4">
+                            <h6 class="fw-bold">2. How often have you felt anxious or worried?</h6>
+                            <div class="form-check">
+                                <input class="form-check-input" type="radio" name="q2" id="q2_1" value="0">
+                                <label class="form-check-label" for="q2_1">Not at all</label>
+                            </div>
+                            <div class="form-check">
+                                <input class="form-check-input" type="radio" name="q2" id="q2_2" value="1">
+                                <label class="form-check-label" for="q2_2">Several days</label>
+                            </div>
+                            <div class="form-check">
+                                <input class="form-check-input" type="radio" name="q2" id="q2_3" value="2">
+                                <label class="form-check-label" for="q2_3">More than half the days</label>
+                            </div>
+                            <div class="form-check">
+                                <input class="form-check-input" type="radio" name="q2" id="q2_4" value="3">
+                                <label class="form-check-label" for="q2_4">Nearly every day</label>
+                            </div>
+                        </div>
+
+                        <!-- Question 3 -->
+                        <div class="question-item mb-4">
+                            <h6 class="fw-bold">3. How often have you felt depressed or hopeless?</h6>
+                            <div class="form-check">
+                                <input class="form-check-input" type="radio" name="q3" id="q3_1" value="0">
+                                <label class="form-check-label" for="q3_1">Not at all</label>
+                            </div>
+                            <div class="form-check">
+                                <input class="form-check-input" type="radio" name="q3" id="q3_2" value="1">
+                                <label class="form-check-label" for="q3_2">Several days</label>
+                            </div>
+                            <div class="form-check">
+                                <input class="form-check-input" type="radio" name="q3" id="q3_3" value="2">
+                                <label class="form-check-label" for="q3_3">More than half the days</label>
+                            </div>
+                            <div class="form-check">
+                                <input class="form-check-input" type="radio" name="q3" id="q3_4" value="3">
+                                <label class="form-check-label" for="q3_4">Nearly every day</label>
+                            </div>
+                        </div>
+
+                        <!-- Question 4 -->
+                        <div class="question-item mb-4">
+                            <h6 class="fw-bold">4. How often have you had trouble sleeping?</h6>
+                            <div class="form-check">
+                                <input class="form-check-input" type="radio" name="q4" id="q4_1" value="0">
+                                <label class="form-check-label" for="q4_1">Not at all</label>
+                            </div>
+                            <div class="form-check">
+                                <input class="form-check-input" type="radio" name="q4" id="q4_2" value="1">
+                                <label class="form-check-label" for="q4_2">Several days</label>
+                            </div>
+                            <div class="form-check">
+                                <input class="form-check-input" type="radio" name="q4" id="q4_3" value="2">
+                                <label class="form-check-label" for="q4_3">More than half the days</label>
+                            </div>
+                            <div class="form-check">
+                                <input class="form-check-input" type="radio" name="q4" id="q4_4" value="3">
+                                <label class="form-check-label" for="q4_4">Nearly every day</label>
+                            </div>
+                        </div>
+
+                        <!-- Question 5 -->
+                        <div class="question-item mb-4">
+                            <h6 class="fw-bold">5. How often have you felt you had no one to turn to?</h6>
+                            <div class="form-check">
+                                <input class="form-check-input" type="radio" name="q5" id="q5_1" value="0">
+                                <label class="form-check-label" for="q5_1">Not at all</label>
+                            </div>
+                            <div class="form-check">
+                                <input class="form-check-input" type="radio" name="q5" id="q5_2" value="1">
+                                <label class="form-check-label" for="q5_2">Several days</label>
+                            </div>
+                            <div class="form-check">
+                                <input class="form-check-input" type="radio" name="q5" id="q5_3" value="2">
+                                <label class="form-check-label" for="q5_3">More than half the days</label>
+                            </div>
+                            <div class="form-check">
+                                <input class="form-check-input" type="radio" name="q5" id="q5_4" value="3">
+                                <label class="form-check-label" for="q5_4">Nearly every day</label>
+                            </div>
+                        </div>
+
+                        <div class="d-grid gap-2">
+                            <button type="submit" class="btn btn-primary btn-lg">
+                                <i class="fas fa-paper-plane"></i> Submit Assessment
+                            </button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block extra_js %}
+<script>
+// Update progress bar as user answers questions
+document.querySelectorAll('input[type="radio"]').forEach(function(radio) {
+    radio.addEventListener('change', function() {
+        let totalQuestions = 5;
+        let answeredQuestions = 0;
+        
+        for (let i = 1; i <= totalQuestions; i++) {
+            let checked = document.querySelector(`input[name="q${i}"]:checked`);
+            if (checked) {
+                answeredQuestions++;
+            }
+        }
+        
+        let progress = (answeredQuestions / totalQuestions) * 100;
+        document.getElementById('progressBar').style.width = progress + '%';
+        document.getElementById('progressBar').textContent = Math.round(progress) + '%';
+    });
+});
+</script>
+{% endblock %}

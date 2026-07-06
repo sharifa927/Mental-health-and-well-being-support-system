@@ -1,0 +1,217 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}Manage Resources - Admin Dashboard{% endblock %}
+
+{% block content %}
+<div class="container">
+    <!-- Page Header -->
+    <div class="row">
+        <div class="col-12">
+            <div class="d-flex justify-content-between align-items-center">
+                <div>
+                    <h2 class="mb-0"><i class="fas fa-book text-info"></i> Manage Resources</h2>
+                    <p class="text-muted">Add, edit and delete educational resources</p>
+                </div>
+                <div>
+                    <a href="#" class="btn btn-info text-white">
+                        <i class="fas fa-plus-circle"></i> Add Resource
+                    </a>
+                    <a href="#" class="btn btn-outline-secondary">
+                        <i class="fas fa-file-export"></i> Export
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Search & Filter -->
+    <div class="row mt-4">
+        <div class="col-12">
+            <div class="card shadow-sm border-0">
+                <div class="card-body">
+                    <div class="row g-3">
+                        <div class="col-md-4">
+                            <div class="input-group">
+                                <span class="input-group-text"><i class="fas fa-search"></i></span>
+                                <input type="text" class="form-control" placeholder="Search resources...">
+                            </div>
+                        </div>
+                        <div class="col-md-3">
+                            <select class="form-select">
+                                <option value="">All Types</option>
+                                <option value="article">Articles</option>
+                                <option value="video">Videos</option>
+                                <option value="pdf">PDF Guides</option>
+                                <option value="audio">Audio</option>
+                            </select>
+                        </div>
+                        <div class="col-md-3">
+                            <select class="form-select">
+                                <option value="">All Categories</option>
+                                <option value="anxiety">Anxiety</option>
+                                <option value="depression">Depression</option>
+                                <option value="stress">Stress Management</option>
+                                <option value="wellness">Wellness</option>
+                            </select>
+                        </div>
+                        <div class="col-md-2">
+                            <button class="btn btn-info text-white w-100">
+                                <i class="fas fa-filter"></i> Filter
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Resources Table -->
+    <div class="row mt-4">
+        <div class="col-12">
+            <div class="card shadow-sm border-0">
+                <div class="card-header bg-white d-flex justify-content-between align-items-center">
+                    <h5 class="mb-0"><i class="fas fa-list"></i> All Resources</h5>
+                    <span class="badge bg-info">23 Resources</span>
+                </div>
+                <div class="card-body">
+                    <div class="table-responsive">
+                        <table class="table table-hover">
+                            <thead>
+                                <tr>
+                                    <th>#</th>
+                                    <th>Title</th>
+                                    <th>Type</th>
+                                    <th>Category</th>
+                                    <th>Added By</th>
+                                    <th>Date</th>
+                                    <th>Actions</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <!-- Resource 1 -->
+                                <tr>
+                                    <td>1</td>
+                                    <td><strong>Understanding Anxiety</strong></td>
+                                    <td><span class="badge bg-primary">Article</span></td>
+                                    <td>Anxiety</td>
+                                    <td>Sharifa Ali</td>
+                                    <td>Jul 01, 2026</td>
+                                    <td>
+                                        <button class="btn btn-sm btn-outline-primary me-1" title="Edit">
+                                            <i class="fas fa-edit"></i>
+                                        </button>
+                                        <button class="btn btn-sm btn-outline-danger" title="Delete">
+                                            <i class="fas fa-trash"></i>
+                                        </button>
+                                    </td>
+                                </tr>
+                                <!-- Resource 2 -->
+                                <tr>
+                                    <td>2</td>
+                                    <td><strong>5-Minute Meditation</strong></td>
+                                    <td><span class="badge bg-success">Video</span></td>
+                                    <td>Wellness</td>
+                                    <td>Fadhil Ali</td>
+                                    <td>Jul 02, 2026</td>
+                                    <td>
+                                        <button class="btn btn-sm btn-outline-primary me-1" title="Edit">
+                                            <i class="fas fa-edit"></i>
+                                        </button>
+                                        <button class="btn btn-sm btn-outline-danger" title="Delete">
+                                            <i class="fas fa-trash"></i>
+                                        </button>
+                                    </td>
+                                </tr>
+                                <!-- Resource 3 -->
+                                <tr>
+                                    <td>3</td>
+                                    <td><strong>Stress Management Workbook</strong></td>
+                                    <td><span class="badge bg-warning text-dark">PDF</span></td>
+                                    <td>Stress Management</td>
+                                    <td>Sharifa Ali</td>
+                                    <td>Jul 03, 2026</td>
+                                    <td>
+                                        <button class="btn btn-sm btn-outline-primary me-1" title="Edit">
+                                            <i class="fas fa-edit"></i>
+                                        </button>
+                                        <button class="btn btn-sm btn-outline-danger" title="Delete">
+                                            <i class="fas fa-trash"></i>
+                                        </button>
+                                    </td>
+                                </tr>
+                                <!-- Resource 4 -->
+                                <tr>
+                                    <td>4</td>
+                                    <td><strong>Building Resilience</strong></td>
+                                    <td><span class="badge bg-primary">Article</span></td>
+                                    <td>Depression</td>
+                                    <td>Fadhil Ali</td>
+                                    <td>Jul 04, 2026</td>
+                                    <td>
+                                        <button class="btn btn-sm btn-outline-primary me-1" title="Edit">
+                                            <i class="fas fa-edit"></i>
+                                        </button>
+                                        <button class="btn btn-sm btn-outline-danger" title="Delete">
+                                            <i class="fas fa-trash"></i>
+                                        </button>
+                                    </td>
+                                </tr>
+                                <!-- Resource 5 -->
+                                <tr>
+                                    <td>5</td>
+                                    <td><strong>Coping with Depression</strong></td>
+                                    <td><span class="badge bg-danger">Video</span></td>
+                                    <td>Depression</td>
+                                    <td>Sharifa Ali</td>
+                                    <td>Jul 05, 2026</td>
+                                    <td>
+                                        <button class="btn btn-sm btn-outline-primary me-1" title="Edit">
+                                            <i class="fas fa-edit"></i>
+                                        </button>
+                                        <button class="btn btn-sm btn-outline-danger" title="Delete">
+                                            <i class="fas fa-trash"></i>
+                                        </button>
+                                    </td>
+                                </tr>
+                                <!-- Resource 6 -->
+                                <tr>
+                                    <td>6</td>
+                                    <td><strong>Sleep Better Tonight</strong></td>
+                                    <td><span class="badge bg-secondary">Audio</span></td>
+                                    <td>Wellness</td>
+                                    <td>Fadhil Ali</td>
+                                    <td>Jul 06, 2026</td>
+                                    <td>
+                                        <button class="btn btn-sm btn-outline-primary me-1" title="Edit">
+                                            <i class="fas fa-edit"></i>
+                                        </button>
+                                        <button class="btn btn-sm btn-outline-danger" title="Delete">
+                                            <i class="fas fa-trash"></i>
+                                        </button>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+
+                    <!-- Pagination -->
+                    <nav aria-label="Page navigation">
+                        <ul class="pagination justify-content-center">
+                            <li class="page-item disabled">
+                                <span class="page-link">Previous</span>
+                            </li>
+                            <li class="page-item active"><span class="page-link">1</span></li>
+                            <li class="page-item"><a class="page-link" href="#">2</a></li>
+                            <li class="page-item"><a class="page-link" href="#">3</a></li>
+                            <li class="page-item">
+                                <a class="page-link" href="#">Next</a>
+                            </li>
+                        </ul>
+                    </nav>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

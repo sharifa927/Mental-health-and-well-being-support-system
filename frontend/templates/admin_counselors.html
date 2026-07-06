@@ -1,0 +1,284 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}Manage Counselors - Admin Dashboard{% endblock %}
+
+{% block content %}
+<div class="container">
+    <!-- Page Header -->
+    <div class="row">
+        <div class="col-12">
+            <div class="d-flex justify-content-between align-items-center">
+                <div>
+                    <h2 class="mb-0"><i class="fas fa-user-md text-success"></i> Manage Counselors</h2>
+                    <p class="text-muted">View, add and manage all counselors in the system</p>
+                </div>
+                <div>
+                    <a href="#" class="btn btn-success">
+                        <i class="fas fa-plus-circle"></i> Add Counselor
+                    </a>
+                    <a href="#" class="btn btn-outline-secondary">
+                        <i class="fas fa-file-export"></i> Export
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Search & Filter -->
+    <div class="row mt-4">
+        <div class="col-12">
+            <div class="card shadow-sm border-0">
+                <div class="card-body">
+                    <div class="row g-3">
+                        <div class="col-md-4">
+                            <div class="input-group">
+                                <span class="input-group-text"><i class="fas fa-search"></i></span>
+                                <input type="text" class="form-control" placeholder="Search by name or specialization...">
+                            </div>
+                        </div>
+                        <div class="col-md-3">
+                            <select class="form-select">
+                                <option value="">All Specializations</option>
+                                <option value="mental-health">Mental Health</option>
+                                <option value="clinical">Clinical Psychology</option>
+                                <option value="therapy">Therapy</option>
+                                <option value="child">Child Psychology</option>
+                                <option value="addiction">Addiction</option>
+                                <option value="marriage">Marriage Counseling</option>
+                            </select>
+                        </div>
+                        <div class="col-md-3">
+                            <select class="form-select">
+                                <option value="">All Status</option>
+                                <option value="available">Available</option>
+                                <option value="booked">Booked</option>
+                                <option value="inactive">Inactive</option>
+                            </select>
+                        </div>
+                        <div class="col-md-2">
+                            <button class="btn btn-success w-100">
+                                <i class="fas fa-filter"></i> Filter
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Counselors Table -->
+    <div class="row mt-4">
+        <div class="col-12">
+            <div class="card shadow-sm border-0">
+                <div class="card-header bg-white d-flex justify-content-between align-items-center">
+                    <h5 class="mb-0"><i class="fas fa-list"></i> All Counselors</h5>
+                    <span class="badge bg-success">12 Counselors</span>
+                </div>
+                <div class="card-body">
+                    <div class="table-responsive">
+                        <table class="table table-hover">
+                            <thead>
+                                <tr>
+                                    <th>#</th>
+                                    <th>Counselor</th>
+                                    <th>Email</th>
+                                    <th>Specialization</th>
+                                    <th>Experience</th>
+                                    <th>Status</th>
+                                    <th>Actions</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <!-- Counselor 1 -->
+                                <tr>
+                                    <td>1</td>
+                                    <td>
+                                        <div class="d-flex align-items-center">
+                                            <img src="https://ui-avatars.com/api/?name=Ramla+Nour&size=40&background=0DCAF0&color=fff" 
+                                                 class="rounded-circle me-2" 
+                                                 alt="Counselor"
+                                                 style="width: 35px; height: 35px;">
+                                            <div>
+                                                <strong>Ramla Nour</strong>
+                                                <p class="text-muted small mb-0">C-001</p>
+                                            </div>
+                                        </div>
+                                    </td>
+                                    <td>nourramla57@email.com</td>
+                                    <td><span class="badge bg-primary">Mental Health</span></td>
+                                    <td>10 years</td>
+                                    <td><span class="badge bg-success">Available</span></td>
+                                    <td>
+                                        <button class="btn btn-sm btn-outline-primary me-1" title="Edit">
+                                            <i class="fas fa-edit"></i>
+                                        </button>
+                                        <button class="btn btn-sm btn-outline-danger" title="Delete">
+                                            <i class="fas fa-trash"></i>
+                                        </button>
+                                    </td>
+                                </tr>
+                                <!-- Counselor 2 -->
+                            <tr>
+                                    <td>2</td>
+                                    <td>
+                                        <div class="d-flex align-items-center">
+                                            <img src="https://ui-avatars.com/api/?name=Aisha+Juma&size=40&background=198754&color=fff" 
+                                                 class="rounded-circle me-2" 
+                                                 alt="Counselor"
+                                                 style="width: 35px; height: 35px;">
+                                            <div>
+                                                <strong>Aisha Juma</strong>
+                                                <p class="text-muted small mb-0">C-002</p>
+                                            </div>
+                                        </div>
+                                    </td>
+                                    <td>fatmajuma@email.com</td>
+                                    <td><span class="badge bg-info">Clinical Psychology</span></td>
+                                    <td>8 years</td>
+                                    <td><span class="badge bg-secondary">Booked</span></td>
+                                    <td>
+                                        <button class="btn btn-sm btn-outline-primary me-1" title="Edit">
+                                            <i class="fas fa-edit"></i>
+                                        </button>
+                                        <button class="btn btn-sm btn-outline-danger" title="Delete">
+                                            <i class="fas fa-trash"></i>
+                                        </button>
+                                    </td>
+                                </tr>
+                                <!-- Counselor 3 -->
+                                <tr>
+                                    <td>3</td>
+                                    <td>
+                                        <div class="d-flex align-items-center">
+                                            <img src="https://ui-avatars.com/api/?name=Ali+Haji&size=40&background=FFC107&color=000" 
+                                                 class="rounded-circle me-2" 
+                                                 alt="Counselor"
+                                                 style="width: 35px; height: 35px;">
+                                            <div>
+                                                <strong>Ali Haji</strong>
+                                                <p class="text-muted small mb-0">C-003</p>
+                                            </div>
+                                        </div>
+                                    </td>
+                                    <td>alihaji87@email.com</td>
+                                    <td><span class="badge bg-warning text-dark">Therapy</span></td>
+                                    <td>5 years</td>
+                                    <td><span class="badge bg-success">Available</span></td>
+                                    <td>
+                                        <button class="btn btn-sm btn-outline-primary me-1" title="Edit">
+                                            <i class="fas fa-edit"></i>
+                                        </button>
+                                        <button class="btn btn-sm btn-outline-danger" title="Delete">
+                                            <i class="fas fa-trash"></i>
+                                        </button>
+                                    </td>
+                                </tr>
+                                <!-- Counselor 4 -->
+                                <tr>
+                                    <td>4</td>
+                                    <td>
+                                        <div class="d-flex align-items-center">
+                                            <img src="https://ui-avatars.com/api/?name=Omar+Said&size=40&background=DC3545&color=fff" 
+                                                 class="rounded-circle me-2" 
+                                                 alt="Counselor"
+                                                 style="width: 35px; height: 35px;">
+                                            <div>
+                                                <strong>Omar Said</strong>
+                                                <p class="text-muted small mb-0">C-004</p>
+                                            </div>
+                                        </div>
+                                    </td>
+                                    <td>omarsaid34@email.com</td>
+                                    <td><span class="badge bg-danger">Child Psychology</span></td>
+                                    <td>7 years</td>
+                                    <td><span class="badge bg-success">Available</span></td>
+                                    <td>
+                                        <button class="btn btn-sm btn-outline-primary me-1" title="Edit">
+                                            <i class="fas fa-edit"></i>
+                                        </button>
+                                        <button class="btn btn-sm btn-outline-danger" title="Delete">
+                                            <i class="fas fa-trash"></i>
+                                        </button>
+                                    </td>
+                                </tr>
+                                <!-- Counselor 5 -->
+                                <tr>
+                                    <td>5</td>
+                                    <td>
+                                        <div class="d-flex align-items-center">
+                                            <img src="https://ui-avatars.com/api/?name=Ali+Juma&size=40&background=17A2B8&color=fff" 
+                                                 class="rounded-circle me-2" 
+                                                 alt="Counselor"
+                                                 style="width: 35px; height: 35px;">
+                                            <div>
+                                                <strong>Ali Juma</strong>
+                                                <p class="text-muted small mb-0">C-005</p>
+                                            </div>
+                                        </div>
+                                    </td>
+                                    <td>aliuma9782@email.com</td>
+                                    <td><span class="badge bg-secondary">Addiction</span></td>
+                                    <td>6 years</td>
+                                    <td><span class="badge bg-secondary">Booked</span></td>
+                                    <td>
+                                        <button class="btn btn-sm btn-outline-primary me-1" title="Edit">
+                                            <i class="fas fa-edit"></i>
+                                        </button>
+                                        <button class="btn btn-sm btn-outline-danger" title="Delete">
+                                            <i class="fas fa-trash"></i>
+                                        </button>
+                                    </td>
+                                </tr>
+                                <!-- Counselor 6 -->
+                                <tr>
+                                    <td>6</td>
+                                    <td>
+                                        <div class="d-flex align-items-center">
+                                            <img src="https://ui-avatars.com/api/?name=Maryam+Said&size=40&background=6F42C1&color=fff" 
+                                                 class="rounded-circle me-2" 
+                                                 alt="Counselor"
+                                                 style="width: 35px; height: 35px;">
+                                            <div>
+                                                <strong>Maryam Said</strong>
+                                                <p class="text-muted small mb-0">C-006</p>
+                                            </div>
+                                        </div>
+                                    </td>
+                                    <td>maryamsaid21@email.com</td>
+                                    <td><span class="badge bg-purple" style="background: #6f42c1;">Marriage</span></td>
+                                    <td>4 years</td>
+                                    <td><span class="badge bg-success">Available</span></td>
+                                    <td>
+                                        <button class="btn btn-sm btn-outline-primary me-1" title="Edit">
+                                            <i class="fas fa-edit"></i>
+                                        </button>
+                                        <button class="btn btn-sm btn-outline-danger" title="Delete">
+                                            <i class="fas fa-trash"></i>
+                                        </button>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+
+                    <!-- Pagination -->
+                    <nav aria-label="Page navigation">
+                        <ul class="pagination justify-content-center">
+                            <li class="page-item disabled">
+                                <span class="page-link">Previous</span>
+                            </li>
+                            <li class="page-item active"><span class="page-link">1</span></li>
+                            <li class="page-item"><a class="page-link" href="#">2</a></li>
+                            <li class="page-item"><a class="page-link" href="#">3</a></li>
+                            <li class="page-item">
+                                <a class="page-link" href="#">Next</a>
+                            </li>
+                        </ul>
+                    </nav>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

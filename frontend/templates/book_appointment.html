@@ -1,0 +1,104 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}Book Appointment - Mental Health Support{% endblock %}
+
+{% block content %}
+<div class="container">
+    <div class="row">
+        <div class="col-12">
+            <h2 class="mb-4"><i class="fas fa-calendar-plus text-primary"></i> Book Counseling Appointment</h2>
+        </div>
+    </div>
+
+    <div class="row justify-content-center">
+        <div class="col-md-8">
+            <div class="card shadow-lg border-0">
+                <div class="card-header bg-primary text-white">
+                    <h5 class="mb-0"><i class="fas fa-user-md"></i> Appointment Details</h5>
+                </div>
+                <div class="card-body p-4">
+                    <form method="post" action="{% url 'book_appointment' %}">
+                        {% csrf_token %}
+                        
+                        <div class="mb-3">
+                            <label for="counselor" class="form-label fw-bold">Select Counselor</label>
+                            <select class="form-select" id="counselor" name="counselor" required>
+                                <option value="">Choose a counselor...</option>
+                                <option value="1">Dr. Amina Ali - Mental Health Counselor</option>
+                                <option value="2">Dr. Khadija Sail - Clinical Psychologist</option>
+                                <option value="3">Dr. Amina Ameir - Therapist</option>
+                            </select>
+                        </div>
+
+                        <div class="mb-3">
+                            <label for="date" class="form-label fw-bold">Select Date</label>
+                            <input type="date" class="form-control" id="date" name="date" required>
+                        </div>
+
+                        <div class="mb-3">
+                            <label class="form-label fw-bold">Select Time Slot</label>
+                            <div class="row g-2">
+                                <div class="col-3">
+                                    <button type="button" class="btn btn-outline-primary w-100 time-slot" data-time="09:00">9:00 AM</button>
+                                </div>
+                                <div class="col-3">
+                                    <button type="button" class="btn btn-outline-primary w-100 time-slot" data-time="10:00">10:00 AM</button>
+                                </div>
+                                <div class="col-3">
+                                    <button type="button" class="btn btn-outline-primary w-100 time-slot" data-time="11:00">11:00 AM</button>
+                                </div>
+                                <div class="col-3">
+                                    <button type="button" class="btn btn-outline-secondary w-100 time-slot" data-time="12:00" disabled>12:00 PM</button>
+                                </div>
+                                <div class="col-3">
+                                    <button type="button" class="btn btn-outline-primary w-100 time-slot" data-time="14:00">2:00 PM</button>
+                                </div>
+                                <div class="col-3">
+                                    <button type="button" class="btn btn-outline-primary w-100 time-slot" data-time="15:00">3:00 PM</button>
+                                </div>
+                                <div class="col-3">
+                                    <button type="button" class="btn btn-outline-primary w-100 time-slot" data-time="16:00">4:00 PM</button>
+                                </div>
+                                <div class="col-3">
+                                    <button type="button" class="btn btn-outline-secondary w-100 time-slot" data-time="17:00" disabled>5:00 PM</button>
+                                </div>
+                            </div>
+                            <input type="hidden" id="selectedTime" name="time" value="">
+                        </div>
+
+                        <div class="mb-3">
+                            <label for="notes" class="form-label">Additional Notes (optional)</label>
+                            <textarea class="form-control" id="notes" name="notes" rows="3" placeholder="Any specific concerns or topics you'd like to discuss?"></textarea>
+                        </div>
+
+                        <div class="d-grid gap-2">
+                            <button type="submit" class="btn btn-primary btn-lg">
+                                <i class="fas fa-check-circle"></i> Request Appointment
+                            </button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block extra_js %}
+<script>
+// Time slot selection
+document.querySelectorAll('.time-slot:not([disabled])').forEach(function(btn) {
+    btn.addEventListener('click', function() {
+        document.querySelectorAll('.time-slot').forEach(function(b) {
+            b.classList.remove('active');
+        });
+        this.classList.add('active');
+        document.getElementById('selectedTime').value = this.dataset.time;
+    });
+});
+
+// Set min date to today
+document.getElementById('date').min = new Date().toISOString().split('T')[0];
+</script>
+{% endblock %}
