@@ -1,20 +1,96 @@
-//Main JavaScript
+// Main JavaScript (layout + existing helpers)
+
+function bindLayoutEvents() {
+    const sidebar = document.getElementById('appSidebar');
+    const backdrop = document.getElementById('sidebarBackdrop');
+    const collapseBtn = document.getElementById('sidebarCollapseBtn');
+    const mobileSidebarBtn = document.getElementById('mobileSidebarBtn');
+
+    // Sidebar collapse (desktop)
+    if (collapseBtn && sidebar) {
+        collapseBtn.addEventListener('click', () => {
+            document.body.classList.toggle('sidebar-collapsed');
+        });
+    }
+
+    // Mobile drawer open/close
+    if (mobileSidebarBtn && sidebar) {
+        mobileSidebarBtn.addEventListener('click', () => {
+            document.body.classList.toggle('sidebar-open');
+            if (backdrop) backdrop.classList.toggle('show');
+        });
+    }
+
+    if (backdrop) {
+        backdrop.addEventListener('click', () => {
+            document.body.classList.remove('sidebar-open');
+            backdrop.classList.remove('show');
+        });
+    }
+
+    // Settings submenu toggle
+    const settingsToggle = document.querySelector('[data-group-toggle="settings"]');
+    const settingsSubmenu = document.getElementById('settingsSubmenu');
+    if (settingsToggle && settingsSubmenu) {
+        settingsToggle.addEventListener('click', (e) => {
+            // prevent unintended focus
+            e.preventDefault();
+            const show = settingsSubmenu.classList.toggle('show');
+            settingsToggle.setAttribute('aria-expanded', show ? 'true' : 'false');
+        });
+    }
+
+    // Close mobile drawer on navigation click
+    document.querySelectorAll('.sidebar a').forEach(a => {
+        a.addEventListener('click', () => {
+            if (document.body.classList.contains('sidebar-open')) {
+                document.body.classList.remove('sidebar-open');
+                if (backdrop) backdrop.classList.remove('show');
+            }
+        });
+    });
+
+    // Active highlighting (best-effort)
+    const currentPath = window.location.pathname;
+    document.querySelectorAll('.sidebar-link').forEach(link => {
+        const href = link.getAttribute('href') || '';
+        if (href && href !== '#' && currentPath === href) {
+            link.classList.add('active');
+        }
+        // allow startsWith for nested admin pages
+        if (href && href !== '#' && currentPath.startsWith(href) && href.length > 1) {
+            link.classList.add('active');
+        }
+    });
+}
 
 //DOM Ready
 document.addEventListener('DOMContentLoaded', function() {
     console.log('Mental Health Support System loaded successfully!');
-    
+
+    bindLayoutEvents();
+
     // Initialize tooltips
     initTooltips();
-    
+
     // Initialize form validation
     initFormValidation();
-    
+
     // Initialize auto-dismiss alerts
     initAlerts();
-    
+
     // Initialize mood buttons
     initMoodButtons();
+
+    // Assessment progress (if present)
+    updateAssessmentProgress();
+
+    // time slots (if present)
+    initTimeSlots();
+
+    // Settings submenu default aria
+    const settingsToggle = document.querySelector('[data-group-toggle="settings"]');
+    if (settingsToggle) settingsToggle.setAttribute('aria-expanded', 'false');
 });
 
 //Tooltips
@@ -32,7 +108,7 @@ function initFormValidation() {
     // Password confirmation validation
     const password = document.getElementById('password');
     const confirmPassword = document.getElementById('confirm_password');
-    
+
     if (password && confirmPassword) {
         confirmPassword.addEventListener('input', function() {
             if (password.value !== this.value) {
@@ -42,7 +118,7 @@ function initFormValidation() {
             }
         });
     }
-    
+
     // Email validation
     const email = document.getElementById('email');
     if (email) {
@@ -75,15 +151,12 @@ function initAlerts() {
 function initMoodButtons() {
     const moodBtns = document.querySelectorAll('.mood-btn');
     const moodInput = document.getElementById('selectedMood');
-    
+
     if (moodBtns.length > 0 && moodInput) {
         moodBtns.forEach(btn => {
             btn.addEventListener('click', function() {
-                // Remove active class from all
                 moodBtns.forEach(b => b.classList.remove('active'));
-                // Add active class to clicked
                 this.classList.add('active');
-                // Set value
                 moodInput.value = this.dataset.mood;
             });
         });
@@ -94,7 +167,7 @@ function initMoodButtons() {
 function initTimeSlots() {
     const slots = document.querySelectorAll('.time-slot:not([disabled])');
     const timeInput = document.getElementById('selectedTime');
-    
+
     if (slots.length > 0 && timeInput) {
         slots.forEach(slot => {
             slot.addEventListener('click', function() {
@@ -110,23 +183,22 @@ function initTimeSlots() {
 function updateAssessmentProgress() {
     const radios = document.querySelectorAll('input[type="radio"]');
     const progressBar = document.getElementById('progressBar');
-    
+
     if (radios.length > 0 && progressBar) {
         radios.forEach(radio => {
             radio.addEventListener('change', function() {
                 const totalQuestions = document.querySelectorAll('.question-item').length;
                 let answered = 0;
-                
+
                 for (let i = 1; i <= totalQuestions; i++) {
                     const checked = document.querySelector(`input[name="q${i}"]:checked`);
                     if (checked) answered++;
                 }
-                
-                const percent = Math.round((answered / totalQuestions) * 100);
+
+                const percent = totalQuestions > 0 ? Math.round((answered / totalQuestions) * 100) : 0;
                 progressBar.style.width = percent + '%';
                 progressBar.textContent = percent + '%';
-                
-                // Change color based on progress
+
                 if (percent === 100) {
                     progressBar.classList.remove('bg-warning', 'bg-danger');
                     progressBar.classList.add('bg-success');
@@ -158,43 +230,34 @@ function confirmAction(message, callback) {
     }
 }
 
-// Toast Notificatio
+// Toast Notification
 function showToast(message, type = 'success') {
     const toastContainer = document.getElementById('toast-container');
     if (!toastContainer) {
-        // Create container if it doesn't exist
         const container = document.createElement('div');
         container.id = 'toast-container';
         container.className = 'position-fixed bottom-0 end-0 p-3';
         container.style.zIndex = '1050';
         document.body.appendChild(container);
     }
-    
+
     const toast = document.createElement('div');
     toast.className = `toast align-items-center text-white bg-${type} border-0`;
     toast.role = 'alert';
     toast.innerHTML = `
         <div class="d-flex">
-            <div class="toast-body">
-                ${message}
-            </div>
+            <div class="toast-body">${message}</div>
             <button type="button" class="btn-close btn-close-white me-2 m-auto" data-bs-dismiss="toast"></button>
         </div>
     `;
-    
+
     document.getElementById('toast-container').appendChild(toast);
     const bsToast = new bootstrap.Toast(toast);
     bsToast.show();
 }
 
-// Main JavaScript
-
-document.addEventListener('DOMContentLoaded', function() {
-    console.log('Mental Health Support System loaded successfully!');
-});
-
-//Export Functions
-// Make functions available globally
+//Export Functions (global)
 window.togglePasswordVisibility = togglePasswordVisibility;
 window.confirmAction = confirmAction;
 window.showToast = showToast;
+

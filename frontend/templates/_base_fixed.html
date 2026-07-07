@@ -12,9 +12,6 @@
     <!-- Font Awesome Icons -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 
-    <!-- Bootstrap Icons -->
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css">
-
     <!-- Google Fonts -->
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
 
@@ -27,7 +24,6 @@
     {% block extra_css %}{% endblock %}
 </head>
 <body>
-
     <!-- Messages/Alerts -->
     <div class="container mt-3">
         {% if messages %}
@@ -42,7 +38,6 @@
 
     <!-- App Layout -->
     <div class="app-shell">
-
         <!-- Sidebar Backdrop (mobile) -->
         <div class="sidebar-backdrop" id="sidebarBackdrop"></div>
 
@@ -62,44 +57,44 @@
             <nav class="sidebar-nav" aria-label="Primary">
                 <ul class="sidebar-menu" id="sidebarMenu">
                     <li class="sidebar-item">
-                        <a class="sidebar-link" href="/dashboard/" data-active="Dashboard">
+                        <a class="sidebar-link" href="/dashboard/">
                             <span class="sidebar-ic"><i class="fas fa-tachometer-alt"></i></span>
                             <span class="sidebar-txt">Dashboard</span>
                         </a>
                     </li>
                     <li class="sidebar-item">
-                        <a class="sidebar-link" href="/assessment/" data-active="Assessment">
+                        <a class="sidebar-link" href="/assessment/">
                             <span class="sidebar-ic"><i class="fas fa-clipboard-list"></i></span>
                             <span class="sidebar-txt">Assessment</span>
                         </a>
                     </li>
                     <li class="sidebar-item">
-                        <a class="sidebar-link" href="/mood-tracker/" data-active="Mood Tracker">
+                        <a class="sidebar-link" href="/mood-tracker/">
                             <span class="sidebar-ic"><i class="fas fa-chart-line"></i></span>
                             <span class="sidebar-txt">Mood Tracker</span>
                         </a>
                     </li>
                     <li class="sidebar-item">
-                        <a class="sidebar-link" href="/counselors/" data-active="Counselors">
+                        <a class="sidebar-link" href="/counselors/">
                             <span class="sidebar-ic"><i class="fas fa-user-md"></i></span>
                             <span class="sidebar-txt">Counselors</span>
                         </a>
                     </li>
                     <li class="sidebar-item">
-                        <a class="sidebar-link" href="/appointments/" data-active="Appointments">
+                        <a class="sidebar-link" href="/appointments/">
                             <span class="sidebar-ic"><i class="fas fa-calendar"></i></span>
                             <span class="sidebar-txt">Appointments</span>
                         </a>
                     </li>
                     <li class="sidebar-item">
-                        <a class="sidebar-link" href="/resources/" data-active="Resources">
+                        <a class="sidebar-link" href="/resources/">
                             <span class="sidebar-ic"><i class="fas fa-book"></i></span>
                             <span class="sidebar-txt">Resources</span>
                         </a>
                     </li>
 
                     <li class="sidebar-item">
-                        <a class="sidebar-link" href="#" data-active="Notifications" onclick="return false;">
+                        <a class="sidebar-link" href="#" onclick="return false;">
                             <span class="sidebar-ic">
                                 <span class="notification-dot" aria-hidden="true"></span>
                                 <i class="fas fa-bell"></i>
@@ -109,7 +104,7 @@
                     </li>
 
                     <li class="sidebar-item">
-                        <a class="sidebar-link" href="/profile/" data-active="Profile">
+                        <a class="sidebar-link" href="/profile/">
                             <span class="sidebar-ic"><i class="fas fa-user"></i></span>
                             <span class="sidebar-txt">Profile</span>
                         </a>
@@ -125,12 +120,12 @@
                         </button>
                         <ul class="sidebar-submenu" id="settingsSubmenu">
                             <li>
-                                <a class="sidebar-sublink" href="#" onclick="return false;" data-active="Change Password">
+                                <a class="sidebar-sublink" href="#" onclick="return false;">
                                     <i class="fas fa-key"></i><span>Change Password</span>
                                 </a>
                             </li>
                             <li>
-                                <a class="sidebar-sublink" href="/logout/" data-active="Logout">
+                                <a class="sidebar-sublink" href="/logout/">
                                     <i class="fas fa-right-from-bracket"></i><span>Logout</span>
                                 </a>
                             </li>
@@ -180,7 +175,8 @@
             </header>
 
             <main class="content-main" id="contentMain">
-                {% block content %}{% endblock %}
+                {% block content %}
+                {% endblock %}
             </main>
 
             <!-- Footer -->
@@ -256,3 +252,4 @@
     {% block extra_js %}{% endblock %}
 </body>
 </html>
+

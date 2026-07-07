@@ -72,8 +72,11 @@ urlpatterns = [
     path('contact/', contact, name='contact'),
 
     # Auth/mental HTML POST handlers
-    path('', include('accounts.urls')),
+    # NOTE: accounts/mental apps already define full relative routes (e.g. accounts/login/).
+    # Do NOT mount with an empty prefix, otherwise redirects will point to /accounts/login/.
+    path('accounts/', include('accounts.urls')),
     path('', include('mental.urls')),
+
 
     # Admin management pages
     path('admin-users/', admin_users, name='admin_users'),
