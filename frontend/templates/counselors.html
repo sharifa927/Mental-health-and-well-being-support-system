@@ -13,153 +13,26 @@
     </div>
 
     <div class="row">
-        <div class="col-12 mb-4">
-            <div class="card shadow-sm border-0">
-                <div class="card-body">
-                    <div class="row g-3">
-                        <div class="col-md-4">
-                            <input type="text" class="form-control" placeholder="Search counselors...">
-                        </div>
-                        <div class="col-md-3">
-                            <select class="form-select">
-                                <option>All Specializations</option>
-                                <option>Mental Health</option>
-                                <option>Anxiety</option>
-                                <option>Depression</option>
-                                <option>Stress Management</option>
-                                <option>Family Therapy</option>
-                            </select>
-                        </div>
-                        <div class="col-md-3">
-                            <select class="form-select">
-                                <option>Sort by</option>
-                                <option>Experience</option>
-                                <option>Availability</option>
-                            </select>
-                        </div>
-                        <div class="col-md-2">
-                            <button class="btn btn-primary w-100"><i class="fas fa-search"></i> Search</button>
-                        </div>
+        {% for counselor in counselors %}
+            <div class="col-md-4 mb-4">
+                <div class="card shadow-sm h-100">
+                    <div class="card-body text-center">
+                        <img src="https://ui-avatars.com/api/?name={{ counselor.get_full_name|default:counselor.username }}&size=100&background=1A5C5A&color=fff" 
+                             class="rounded-circle mb-3" alt="Counselor">
+                        <h5 class="fw-bold">{{ counselor.get_full_name|default:counselor.username }}</h5>
+                        <p class="text-muted small">Mental Health Counselor</p>
+                        <p class="text-muted small">{{ counselor.email }}</p>
+                        <a href="/book-appointment/" class="btn btn-primary w-100 mt-3">
+                            <i class="fas fa-calendar-plus"></i> Book Appointment
+                        </a>
                     </div>
                 </div>
             </div>
-        </div>
-    </div>
-
-    <div class="row">
-        <!-- Counselor 1: Amina Ali -->
-        <div class="col-md-4 mb-4">
-            <div class="card shadow-sm h-100">
-                <div class="card-body text-center">
-                    <img src="https://ui-avatars.com/api/?name=Amina+Ali&size=100&background=0D6EFD&color=fff" class="rounded-circle mb-3" alt="Counselor">
-                    <h5 class="fw-bold">Amina Ali</h5>
-                    <p class="text-muted small">Mental Health Counselor</p>
-                    <div class="mb-2">
-                        <span class="badge bg-primary">10 years experience</span>
-                        <span class="badge bg-success">Available Today</span>
-                    </div>
-                    <p class="text-muted small">Specializes in anxiety, depression, and stress management.</p>
-                    <a href="/book-appointment/" class="btn btn-primary w-100 mt-3">
-                        <i class="fas fa-calendar-plus"></i> Book Appointment
-                    </a>
-                </div>
+        {% empty %}
+            <div class="col-12">
+                <p class="text-center text-muted">No counselors available at the moment.</p>
             </div>
-        </div>
-
-        <!-- Counselor 2: Fatma Juma -->
-        <div class="col-md-4 mb-4">
-            <div class="card shadow-sm h-100">
-                <div class="card-body text-center">
-                    <img src="https://ui-avatars.com/api/?name=Fatma+Juma&size=100&background=198754&color=fff" class="rounded-circle mb-3" alt="Counselor">
-                    <h5 class="fw-bold">Fatma Juma</h5>
-                    <p class="text-muted small">Clinical Psychologist</p>
-                    <div class="mb-2">
-                        <span class="badge bg-primary">8 years experience</span>
-                        <span class="badge bg-secondary">Booked Today</span>
-                    </div>
-                    <p class="text-muted small">Specializes in trauma, PTSD, and relationship issues.</p>
-                    <a href="/book-appointment/" class="btn btn-primary w-100 mt-3">
-                        <i class="fas fa-calendar-plus"></i> Book Appointment
-                    </a>
-                </div>
-            </div>
-        </div>
-
-        <!-- Counselor 3: Ussi Haji -->
-        <div class="col-md-4 mb-4">
-            <div class="card shadow-sm h-100">
-                <div class="card-body text-center">
-                    <img src="https://ui-avatars.com/api/?name=Ussi+Haji&size=100&background=FFC107&color=000" class="rounded-circle mb-3" alt="Counselor">
-                    <h5 class="fw-bold">Ussi Haji</h5>
-                    <p class="text-muted small">Therapist</p>
-                    <div class="mb-2">
-                        <span class="badge bg-primary">5 years experience</span>
-                        <span class="badge bg-success">Available Tomorrow</span>
-                    </div>
-                    <p class="text-muted small">Specializes in youth counseling and family therapy.</p>
-                    <a href="/book-appointment/" class="btn btn-primary w-100 mt-3">
-                        <i class="fas fa-calendar-plus"></i> Book Appointment
-                    </a>
-                </div>
-            </div>
-        </div>
-
-        <!-- Counselor 4: Asha Bakari -->
-        <div class="col-md-4 mb-4">
-            <div class="card shadow-sm h-100">
-                <div class="card-body text-center">
-                    <img src="https://ui-avatars.com/api/?name=Asha+Bakari&size=100&background=DC3545&color=fff" class="rounded-circle mb-3" alt="Counselor">
-                    <h5 class="fw-bold">Asha Bakari</h5>
-                    <p class="text-muted small">Child Psychologist</p>
-                    <div class="mb-2">
-                        <span class="badge bg-primary">7 years experience</span>
-                        <span class="badge bg-success">Available Today</span>
-                    </div>
-                    <p class="text-muted small">Specializes in child and adolescent mental health.</p>
-                    <a href="/book-appointment/" class="btn btn-primary w-100 mt-3">
-                        <i class="fas fa-calendar-plus"></i> Book Appointment
-                    </a>
-                </div>
-            </div>
-        </div>
-
-        <!-- Counselor 5: Ali Juma -->
-        <div class="col-md-4 mb-4">
-            <div class="card shadow-sm h-100">
-                <div class="card-body text-center">
-                    <img src="https://ui-avatars.com/api/?name=Ali+Juma&size=100&background=17A2B8&color=fff" class="rounded-circle mb-3" alt="Counselor">
-                    <h5 class="fw-bold">Ali Juma</h5>
-                    <p class="text-muted small">Addiction Counselor</p>
-                    <div class="mb-2">
-                        <span class="badge bg-primary">6 years experience</span>
-                        <span class="badge bg-secondary">Booked Today</span>
-                    </div>
-                    <p class="text-muted small">Specializes in addiction recovery and substance abuse.</p>
-                    <a href="/book-appointment/" class="btn btn-primary w-100 mt-3">
-                        <i class="fas fa-calendar-plus"></i> Book Appointment
-                    </a>
-                </div>
-            </div>
-        </div>
-
-        <!-- Counselor 6: Maryam Said -->
-        <div class="col-md-4 mb-4">
-            <div class="card shadow-sm h-100">
-                <div class="card-body text-center">
-                    <img src="https://ui-avatars.com/api/?name=Maryam+Said&size=100&background=6F42C1&color=fff" class="rounded-circle mb-3" alt="Counselor">
-                    <h5 class="fw-bold">Maryam Said</h5>
-                    <p class="text-muted small">Marriage Counselor</p>
-                    <div class="mb-2">
-                        <span class="badge bg-primary">4 years experience</span>
-                        <span class="badge bg-success">Available Tomorrow</span>
-                    </div>
-                    <p class="text-muted small">Specializes in marriage counseling and relationship issues.</p>
-                    <a href="/book-appointment/" class="btn btn-primary w-100 mt-3">
-                        <i class="fas fa-calendar-plus"></i> Book Appointment
-                    </a>
-                </div>
-            </div>
-        </div>
+        {% endfor %}
     </div>
 </div>
 {% endblock %}

@@ -25,9 +25,12 @@
                             <label for="counselor" class="form-label fw-bold">Select Counselor</label>
                             <select class="form-select" id="counselor" name="counselor" required>
                                 <option value="">Choose a counselor...</option>
-                                <option value="1">Dr. Amina Ali - Mental Health Counselor</option>
-                                <option value="2">Dr. Khadija Sail - Clinical Psychologist</option>
-                                <option value="3">Dr. Amina Ameir - Therapist</option>
+                                <option value="1">Amina Ali - Mental Health Counselor</option>
+                                <option value="2">Fatma Juma - Clinical Psychologist</option>
+                                <option value="3">Ussi Haji - Therapist</option>
+                                <option value="4">Asha Bakari - Child Psychologist</option>
+                                <option value="5">Ali Juma - Addiction Counselor</option>
+                                <option value="6">Maryam Said - Marriage Counselor</option>
                             </select>
                         </div>
 
@@ -36,39 +39,41 @@
                             <input type="date" class="form-control" id="date" name="date" required>
                         </div>
 
-                        <div class="mb-3">
-                            <label class="form-label fw-bold">Select Time Slot</label>
-                            <div class="row g-2">
-                                <div class="col-3">
-                                    <button type="button" class="btn btn-outline-primary w-100 time-slot" data-time="09:00">9:00 AM</button>
-                                </div>
-                                <div class="col-3">
-                                    <button type="button" class="btn btn-outline-primary w-100 time-slot" data-time="10:00">10:00 AM</button>
-                                </div>
-                                <div class="col-3">
-                                    <button type="button" class="btn btn-outline-primary w-100 time-slot" data-time="11:00">11:00 AM</button>
-                                </div>
-                                <div class="col-3">
-                                    <button type="button" class="btn btn-outline-secondary w-100 time-slot" data-time="12:00" disabled>12:00 PM</button>
-                                </div>
-                                <div class="col-3">
-                                    <button type="button" class="btn btn-outline-primary w-100 time-slot" data-time="14:00">2:00 PM</button>
-                                </div>
-                                <div class="col-3">
-                                    <button type="button" class="btn btn-outline-primary w-100 time-slot" data-time="15:00">3:00 PM</button>
-                                </div>
-                                <div class="col-3">
-                                    <button type="button" class="btn btn-outline-primary w-100 time-slot" data-time="16:00">4:00 PM</button>
-                                </div>
-                                <div class="col-3">
-                                    <button type="button" class="btn btn-outline-secondary w-100 time-slot" data-time="17:00" disabled>5:00 PM</button>
-                                </div>
-                            </div>
+                      <div class="mb-3">
+    <label class="form-label fw-bold">Select Time Slot</label>
+    <div class="row g-2">
+        <div class="col-3">
+            <button type="button" class="btn time-slot time-slot-available" data-time="09:00">9:00 AM</button>
+        </div>
+        <div class="col-3">
+            <button type="button" class="btn time-slot time-slot-available" data-time="10:00">10:00 AM</button>
+        </div>
+        <div class="col-3">
+            <button type="button" class="btn time-slot time-slot-available" data-time="11:00">11:00 AM</button>
+        </div>
+        <div class="col-3">
+            <button type="button" class="btn time-slot time-slot-available" data-time="12:00">12:00 PM</button>
+        </div>
+        <div class="col-3">
+            <button type="button" class="btn time-slot time-slot-available" data-time="14:00">2:00 PM</button>
+        </div>
+        <div class="col-3">
+            <button type="button" class="btn time-slot time-slot-available" data-time="15:00">3:00 PM</button>
+        </div>
+        <div class="col-3">
+            <button type="button" class="btn time-slot time-slot-available" data-time="16:00">4:00 PM</button>
+        </div>
+        <div class="col-3">
+            <button type="button" class="btn time-slot time-slot-available" data-time="17:00">5:00 PM</button>
+        </div>
+    </div>
+    <input type="hidden" id="selectedTime" name="time" value="">
+</div>
                             <input type="hidden" id="selectedTime" name="time" value="">
                         </div>
 
                         <div class="mb-3">
-                            <label for="notes" class="form-label">Additional Notes (optional)</label>
+                            <label for="notes" class="form-label fw-bold">Additional Notes (optional)</label>
                             <textarea class="form-control" id="notes" name="notes" rows="3" placeholder="Any specific concerns or topics you'd like to discuss?"></textarea>
                         </div>
 
@@ -88,12 +93,15 @@
 {% block extra_js %}
 <script>
 // Time slot selection
-document.querySelectorAll('.time-slot:not([disabled])').forEach(function(btn) {
+document.querySelectorAll('.time-slot-available').forEach(function(btn) {
     btn.addEventListener('click', function() {
-        document.querySelectorAll('.time-slot').forEach(function(b) {
+        // Remove active class from all time slots
+        document.querySelectorAll('.time-slot-available').forEach(function(b) {
             b.classList.remove('active');
         });
+        // Add active class to clicked button
         this.classList.add('active');
+        // Set hidden input value
         document.getElementById('selectedTime').value = this.dataset.time;
     });
 });

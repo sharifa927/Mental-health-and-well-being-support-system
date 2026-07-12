@@ -1,24 +1,21 @@
-from django.conf import settings
-from django.conf.urls.static import static
 from django.contrib import admin
+from django.urls import path, include
 from django.shortcuts import render
-from django.urls import include, path
 
-from content.views import about, contact, resources
+# Import views from mental app
+from mental.views import (
+    dashboard, mood_tracker, assessment, book_appointment, 
+    appointments, counselors, resources
+)
 
 
-# VIEWS -connect URLs to HTML files
-
+# Views - connect URLs to HTML files
 def home(request):
     return render(request, 'index.html')
 
 
-def dashboard(request):
-    return render(request, 'dashboard.html')
-
-
-def counselors(request):
-    return render(request, 'counselors.html')
+def about(request):
+    return render(request, 'about.html')
 
 
 def profile(request):
@@ -31,6 +28,10 @@ def admin_dashboard(request):
 
 def counselor_dashboard(request):
     return render(request, 'counselor_dashboard.html')
+
+
+def contact(request):
+    return render(request, 'contact.html')
 
 
 def terms(request):
@@ -53,41 +54,34 @@ def admin_quotes(request):
     return render(request, 'admin_quotes.html')
 
 
+# URL Patterns - map URLs to views
 urlpatterns = [
     path('admin/', admin.site.urls),
-
-    # HTML routes
+    path('accounts/', include('accounts.urls')),  # This handles login, register, logout
+    
+    # Public pages
     path('', home, name='home'),
-    path('dashboard/', dashboard, name='dashboard'),
-
     path('about/', about, name='about'),
-    path('resources/', resources, name='resources'),
-    path('counselors/', counselors, name='counselors'),
-    path('profile/', profile, name='profile'),
-
-    path('admin-dashboard/', admin_dashboard, name='admin_dashboard'),
-    path('counselor-dashboard/', counselor_dashboard, name='counselor_dashboard'),
-
-    path('terms/', terms, name='terms'),
     path('contact/', contact, name='contact'),
-
-    # Auth/mental HTML POST handlers
-    # NOTE: accounts/mental apps already define full relative routes (e.g. accounts/login/).
-    # Do NOT mount with an empty prefix, otherwise redirects will point to /accounts/login/.
-    path('accounts/', include('accounts.urls')),
-    path('', include('mental.urls')),
-
-
-    # Admin management pages
+    path('terms/', terms, name='terms'),
+    
+    # User pages (require login)
+    path('dashboard/', dashboard, name='dashboard'),
+    path('profile/', profile, name='profile'),
+    path('assessment/', assessment, name='assessment'),
+    path('mood-tracker/', mood_tracker, name='mood_tracker'),
+    path('counselors/', counselors, name='counselors'),
+    path('book-appointment/', book_appointment, name='book_appointment'),
+    path('appointments/', appointments, name='appointments'),
+    path('resources/', resources, name='resources'),
+    
+    # Admin pages
+    path('admin-dashboard/', admin_dashboard, name='admin_dashboard'),
     path('admin-users/', admin_users, name='admin_users'),
     path('admin-counselors/', admin_counselors, name='admin_counselors'),
     path('admin-resources/', admin_resources, name='admin_resources'),
     path('admin-quotes/', admin_quotes, name='admin_quotes'),
-
-    # DRF + JWT API
-    path('api/', include('config.api')),
+    
+    # Counselor pages
+    path('counselor-dashboard/', counselor_dashboard, name='counselor_dashboard'),
 ]
-
-if settings.DEBUG:
-    urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
-

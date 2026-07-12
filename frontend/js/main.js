@@ -230,34 +230,7 @@ function confirmAction(message, callback) {
     }
 }
 
-// Toast Notification
-function showToast(message, type = 'success') {
-    const toastContainer = document.getElementById('toast-container');
-    if (!toastContainer) {
-        const container = document.createElement('div');
-        container.id = 'toast-container';
-        container.className = 'position-fixed bottom-0 end-0 p-3';
-        container.style.zIndex = '1050';
-        document.body.appendChild(container);
-    }
-
-    const toast = document.createElement('div');
-    toast.className = `toast align-items-center text-white bg-${type} border-0`;
-    toast.role = 'alert';
-    toast.innerHTML = `
-        <div class="d-flex">
-            <div class="toast-body">${message}</div>
-            <button type="button" class="btn-close btn-close-white me-2 m-auto" data-bs-dismiss="toast"></button>
-        </div>
-    `;
-
-    document.getElementById('toast-container').appendChild(toast);
-    const bsToast = new bootstrap.Toast(toast);
-    bsToast.show();
-}
-
 //Export Functions (global)
 window.togglePasswordVisibility = togglePasswordVisibility;
 window.confirmAction = confirmAction;
-window.showToast = showToast;
 

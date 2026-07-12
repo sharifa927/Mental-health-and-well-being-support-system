@@ -1,331 +1,413 @@
-{% extends 'base.html' %}
 {% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Manage Users - Admin Dashboard</title>
 
-{% block title %}Manage Users - Admin Dashboard{% endblock %}
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
 
-{% block content %}
-<div class="container">
-    <!-- Page Header -->
-    <div class="row">
-        <div class="col-12">
-            <div class="d-flex justify-content-between align-items-center">
-                <div>
-                    <h2 class="mb-0"><i class="fas fa-users text-primary"></i> Manage Users</h2>
-                    <p class="text-muted">View, search and manage all registered users</p>
+    <!-- Font Awesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+</head>
+<body>
+
+    <!-- Messages/Alerts -->
+    <div class="container mt-3">
+        {% if messages %}
+            {% for message in messages %}
+                <div class="alert alert-{{ message.tags }} alert-dismissible fade show" role="alert">
+                    {{ message }}
+                    <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
                 </div>
-                <div>
-                    <a href="#" class="btn btn-primary">
-                        <i class="fas fa-user-plus"></i> Add New User
-                    </a>
-                    <a href="#" class="btn btn-outline-secondary">
-                        <i class="fas fa-file-export"></i> Export
-                    </a>
-                </div>
-            </div>
-        </div>
+            {% endfor %}
+        {% endif %}
     </div>
 
-    <!-- Search & Filter -->
-    <div class="row mt-4">
-        <div class="col-12">
-            <div class="card shadow-sm border-0">
-                <div class="card-body">
-                    <div class="row g-3">
-                      <div class="col-md-4">
-                            <div class="input-group">
-                                <span class="input-group-text"><i class="fas fa-search"></i></span>
-                                <input type="text" class="form-control" placeholder="Search by name or email...">
+    <!-- App Layout -->
+    <div class="app-shell">
+
+        <!-- Sidebar Backdrop (mobile) -->
+        <div class="sidebar-backdrop" id="sidebarBackdrop"></div>
+
+        <!-- ============================================ -->
+        <!-- ADMIN SIDEBAR -->
+        <!-- ============================================ -->
+        <aside class="sidebar" id="appSidebar">
+            <div class="sidebar-top">
+                <a class="brand" href="/admin-dashboard/">
+                    <span class="brand-icon"><i class="fas fa-user-shield"></i></span>
+                    <span class="brand-text">Admin Panel</span>
+                </a>
+                <button class="icon-btn" id="sidebarCollapseBtn" type="button" aria-label="Collapse sidebar">
+                    <i class="fas fa-chevron-left"></i>
+                </button>
+            </div>
+
+            <nav class="sidebar-nav" aria-label="Primary">
+                <ul class="sidebar-menu" id="sidebarMenu">
+
+                    <li class="sidebar-item">
+                        <a class="sidebar-link" href="/admin-dashboard/">
+                            <span class="sidebar-ic"><i class="fas fa-tachometer-alt"></i></span>
+                            <span class="sidebar-txt">Dashboard</span>
+                        </a>
+                    </li>
+
+                    <li class="sidebar-item">
+                        <a class="sidebar-link active" href="/admin-users/">
+                            <span class="sidebar-ic"><i class="fas fa-users"></i></span>
+                            <span class="sidebar-txt">Manage Users</span>
+                        </a>
+                    </li>
+
+                    <li class="sidebar-item">
+                        <a class="sidebar-link" href="/admin-counselors/">
+                            <span class="sidebar-ic"><i class="fas fa-user-md"></i></span>
+                            <span class="sidebar-txt">Manage Counselors</span>
+                        </a>
+                    </li>
+
+                    <li class="sidebar-item">
+                        <a class="sidebar-link" href="/admin-resources/">
+                            <span class="sidebar-ic"><i class="fas fa-book"></i></span>
+                            <span class="sidebar-txt">Manage Resources</span>
+                        </a>
+                    </li>
+
+                    <li class="sidebar-item">
+                        <a class="sidebar-link" href="/admin-quotes/">
+                            <span class="sidebar-ic"><i class="fas fa-quote-right"></i></span>
+                            <span class="sidebar-txt">Manage Quotes</span>
+                        </a>
+                    </li>
+
+                    <li class="sidebar-divider"></li>
+
+                    <li class="sidebar-item">
+                        <a class="sidebar-link" href="/accounts/logout/">
+                            <span class="sidebar-ic"><i class="fas fa-sign-out-alt"></i></span>
+                            <span class="sidebar-txt">Logout</span>
+                        </a>
+                    </li>
+
+                </ul>
+            </nav>
+
+            <div class="sidebar-bottom">
+                <small class="sidebar-foot">Admin v1.0</small>
+            </div>
+        </aside>
+        <!-- ============================================ -->
+        <!-- END ADMIN SIDEBAR -->
+        <!-- ============================================ -->
+
+
+        <!-- ============================================ -->
+        <!-- CONTENT WRAP -->
+        <!-- ============================================ -->
+        <div class="content-wrap">
+
+            <!-- ============================================ -->
+            <!-- CONTENT HEADER -->
+            <!-- ============================================ -->
+            <header class="content-header">
+
+                <!-- Mobile Sidebar Toggle -->
+                <button class="icon-btn mobile-only" id="mobileSidebarBtn" type="button" aria-label="Open sidebar">
+                    <i class="fas fa-bars"></i>
+                </button>
+
+                <!-- User Menu - TOP RIGHT -->
+                <div class="header-actions">
+                    <div class="user-menu dropdown">
+                        <button class="user-btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+                            <span class="avatar">S</span>
+                            <span class="user-meta">
+                                <span class="user-name">Sharifa</span>
+                                <small class="text-muted">Admin</small>
+                            </span>
+                        </button>
+                        <ul class="dropdown-menu dropdown-menu-end">
+                            <li><a class="dropdown-item text-danger" href="/accounts/logout/"><i class="fas fa-sign-out-alt me-2"></i> Logout</a></li>
+                        </ul>
+                    </div>
+                </div>
+
+            </header>
+            <!-- ============================================ -->
+            <!-- END CONTENT HEADER -->
+            <!-- ============================================ -->
+
+
+            <!-- ============================================ -->
+            <!-- MAIN CONTENT -->
+            <!-- ============================================ -->
+            <main class="content-main" id="contentMain">
+                <div class="container">
+                    <!-- Page Header -->
+                    <div class="row">
+                        <div class="col-12">
+                            <div class="d-flex justify-content-between align-items-center">
+                                <div>
+                                    <h2 class="mb-0"><i class="fas fa-users text-primary"></i> Manage Users</h2>
+                                    <p class="text-muted">View and manage all registered users</p>
+                                </div>
+                                <div>
+                                    <a href="#" class="btn btn-primary">
+                                        <i class="fas fa-user-plus"></i> Add New User
+                                    </a>
+                                </div>
                             </div>
                         </div>
-                        <div class="col-md-3">
-                            <select class="form-select">
-                                <option value="">All Roles</option>
-                                <option value="user">Users</option>
-                                <option value="counselor">Counselors</option>
-                                <option value="admin">Admins</option>
-                            </select>
-                        </div>
-                        <div class="col-md-3">
-                            <select class="form-select">
-                                <option value="">All Status</option>
-                                <option value="active">Active</option>
-                            <option value="inactive">Inactive</option>
-                                <option value="suspended">Suspended</option>
-                            </select>
-                        </div>
-                        <div class="col-md-2">
-                            <button class="btn btn-primary w-100">
-                                <i class="fas fa-filter"></i> Filter
-                            </button>
-                        </div>
                     </div>
-                </div>
-            </div>
-        </div>
-    </div>
 
-    <!-- Users Table -->
-    <div class="row mt-4">
-        <div class="col-12">
-            <div class="card shadow-sm border-0">
-                <div class="card-header bg-white d-flex justify-content-between align-items-center">
-                    <h5 class="mb-0"><i class="fas fa-list"></i> All Users</h5>
-                    <span class="badge bg-primary">156 Users</span>
-                </div>
-                <div class="card-body">
-                    <div class="table-responsive">
-                        <table class="table table-hover">
-                            <thead>
-                                <tr>
-                                    <th>#</th>
-                                    <th>User</th>
-                                    <th>Email</th>
-                                    <th>Role</th>
-                                    <th>Status</th>
-                                    <th>Joined</th>
-                                    <th>Actions</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <!-- User 1 -->
-                                <tr>
-                                    <td>1</td>
-                                    <td>
-                                        <div class="d-flex align-items-center">
-                                            <img src="https://ui-avatars.com/api/?name=Sharifa+Ali&size=40&background=0D6EFD&color=fff" 
-                                                 class="rounded-circle me-2" 
-                                                 alt="User"
-                                                 style="width: 35px; height: 35px;">
-                                            <div>
-                                                <strong>Sharifa Mohamed Ali</strong>
-                                            </div>
-                                        </div>
-                                    </td>
-                                    <td>sharifaali927@gmail.com</td>
-                                    <td><span class="badge bg-danger">Admin</span></td>
-                                    <td><span class="badge bg-success">Active</span></td>
-                                    <td>Jun 29, 2026</td>
-                                    <td>
-                                        <button class="btn btn-sm btn-outline-primary me-1" title="Edit">
-                                            <i class="fas fa-edit"></i>
-                                        </button>
-                                        <button class="btn btn-sm btn-outline-danger" title="Delete">
-                                            <i class="fas fa-trash"></i>
-                                        </button>
-                                    </td>
-                                </tr>
-                                <!-- User 2 -->
-                                <tr>
-                                    <td>2</td>
-                                    <td>
-                                        <div class="d-flex align-items-center">
-                                            <img src="https://ui-avatars.com/api/?name=Fadhil+Ali&size=40&background=198754&color=fff" 
-                                                 class="rounded-circle me-2" 
-                                                 alt="User"
-                                                 style="width: 35px; height: 35px;">
-                                            <div>
-                                                <strong>Fadhil Mohammed Ali</strong>
+                    <!-- Users Table -->
+                    <div class="row mt-4">
+                        <div class="col-12">
+                            <div class="card shadow-sm border-0">
+                                <div class="card-header bg-white d-flex justify-content-between align-items-center">
+                                    <h5 class="mb-0"><i class="fas fa-list"></i> All Users</h5>
+                                    <span class="badge bg-primary">156 Users</span>
+                                </div>
+                                <div class="card-body">
+                                    <div class="table-responsive">
+                                        <table class="table table-hover">
+                                            <thead>
+                                                <tr>
+                                                    <th>#</th>
+                                                    <th>User</th>
+                                                    <th>Email</th>
+                                                    <th>Role</th>
+                                                    <th>Joined</th>
+                                                    <th>Actions</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                <!-- User 1 -->
+                                                <tr>
+                                                    <td>1</td>
+                                                    <td>
+                                                        <div class="d-flex align-items-center">
+                                                            <img src="https://ui-avatars.com/api/?name=Sharifa+Ali&size=40&background=1A5C5A&color=fff" 
+                                                                 class="rounded-circle me-2" 
+                                                                 alt="User"
+                                                                 style="width: 35px; height: 35px;">
+                                                            <div>
+                                                                <strong>Sharifa Mohamed Ali</strong>
+                                                            </div>
+                                                        </div>
+                                                    </td>
+                                                    <td>sharifaali927@gmail.com</td>
+                                                    <td><span class="badge bg-danger">Admin</span></td>
+                                                    <td>Jun 29, 2026</td>
+                                                    <td>
+                                                        <button class="btn btn-sm btn-outline-danger" title="Delete">
+                                                            <i class="fas fa-trash"></i>
+                                                        </button>
+                                                    </td>
+                                                </tr>
+                                                <!-- User 2 -->
+                                                <tr>
+                                                    <td>2</td>
+                                                    <td>
+                                                        <div class="d-flex align-items-center">
+                                                            <img src="https://ui-avatars.com/api/?name=Fadhil+Ali&size=40&background=1A5C5A&color=fff" 
+                                                                 class="rounded-circle me-2" 
+                                                                 alt="User"
+                                                                 style="width: 35px; height: 35px;">
+                                                            <div>
+                                                                <strong>Fadhil Mohammed Ali</strong>
+                                                            </div>
+                                                        </div>
+                                                    </td>
+                                                    <td>fadheel123@email.com</td>
+                                                    <td><span class="badge bg-danger">Admin</span></td>
+                                                    <td>Jun 29, 2026</td>
+                                                    <td>
+                                                        <button class="btn btn-sm btn-outline-danger" title="Delete">
+                                                            <i class="fas fa-trash"></i>
+                                                        </button>
+                                                    </td>
+                                                </tr>
+                                                <!-- User 3 -->
+                                                <tr>
+                                                    <td>3</td>
+                                                    <td>
+                                                        <div class="d-flex align-items-center">
+                                                            <img src="https://ui-avatars.com/api/?name=Amina+Omar&size=40&background=0DCAF0&color=fff" 
+                                                                 class="rounded-circle me-2" 
+                                                                 alt="User"
+                                                                 style="width: 35px; height: 35px;">
+                                                            <div>
+                                                                <strong>Amina Omar</strong>
+                                                            </div>
+                                                        </div>
+                                                    </td>
+                                                    <td>aminaomar553@email.com</td>
+                                                    <td><span class="badge bg-primary">Counselor</span></td>
+                                                    <td>Jun 30, 2026</td>
+                                                    <td>
+                                                        <button class="btn btn-sm btn-outline-danger" title="Delete">
+                                                            <i class="fas fa-trash"></i>
+                                                        </button>
+                                                    </td>
+                                                </tr>
+                                                <!-- User 4 -->
+                                                <tr>
+                                                    <td>4</td>
+                                                    <td>
+                                                        <div class="d-flex align-items-center">
+                                                            <img src="https://ui-avatars.com/api/?name=Asha+Ussi&size=40&background=FFC107&color=000" 
+                                                                 class="rounded-circle me-2" 
+                                                                 alt="User"
+                                                                 style="width: 35px; height: 35px;">
+                                                            <div>
+                                                                <strong>Asha Ussi</strong>
+                                                            </div>
+                                                        </div>
+                                                    </td>
+                                                    <td>ashaussi58@email.com</td>
+                                                    <td><span class="badge bg-secondary">User</span></td>
+                                                    <td>Jul 01, 2026</td>
+                                                    <td>
+                                                        <button class="btn btn-sm btn-outline-danger" title="Delete">
+                                                            <i class="fas fa-trash"></i>
+                                                        </button>
+                                                    </td>
+                                                </tr>
+                                                <!-- User 5 -->
+                                                <tr>
+                                                    <td>5</td>
+                                                    <td>
+                                                        <div class="d-flex align-items-center">
+                                                            <img src="https://ui-avatars.com/api/?name=Ussi+Haji&size=40&background=DC3545&color=fff" 
+                                                                 class="rounded-circle me-2" 
+                                                                 alt="User"
+                                                                 style="width: 35px; height: 35px;">
+                                                            <div>
+                                                                <strong>Ussi Haji</strong>
+                                                            </div>
+                                                        </div>
+                                                    </td>
+                                                    <td>ussihaji@email.com</td>
+                                                    <td><span class="badge bg-primary">Counselor</span></td>
+                                                    <td>Jul 02, 2026</td>
+                                                    <td>
+                                                        <button class="btn btn-sm btn-outline-danger" title="Delete">
+                                                            <i class="fas fa-trash"></i>
+                                                        </button>
+                                                    </td>
+                                                </tr>
+                                                <!-- User 6 -->
+                                                <tr>
+                                                    <td>6</td>
+                                                    <td>
+                                                        <div class="d-flex align-items-center">
+                                                            <img src="https://ui-avatars.com/api/?name=Zulekha+Issa&size=40&background=6F42C1&color=fff" 
+                                                                 class="rounded-circle me-2" 
+                                                                 alt="User"
+                                                                 style="width: 35px; height: 35px;">
+                                                            <div>
+                                                                <strong>Zulekha Issa</strong>
+                                                            </div>
+                                                        </div>
+                                                    </td>
+                                                    <td>zulisaa8678@email.com</td>
+                                                    <td><span class="badge bg-secondary">User</span></td>
+                                                    <td>Jul 03, 2026</td>
+                                                    <td>
+                                                        <button class="btn btn-sm btn-outline-danger" title="Delete">
+                                                            <i class="fas fa-trash"></i>
+                                                        </button>
+                                                    </td>
+                                                </tr>
+                                                <!-- User 7 -->
+                                                <tr>
+                                                    <td>7</td>
+                                                    <td>
+                                                        <div class="d-flex align-items-center">
+                                                            <img src="https://ui-avatars.com/api/?name=Ali+Juma&size=40&background=20C997&color=fff" 
+                                                                 class="rounded-circle me-2" 
+                                                                 alt="User"
+                                                                 style="width: 35px; height: 35px;">
+                                                            <div>
+                                                                <strong>Ali Juma</strong>
+                                                            </div>
+                                                        </div>
+                                                    </td>
+                                                    <td>alijuma@email.com</td>
+                                                    <td><span class="badge bg-secondary">User</span></td>
+                                                    <td>Jul 04, 2026</td>
+                                                    <td>
+                                                        <button class="btn btn-sm btn-outline-danger" title="Delete">
+                                                            <i class="fas fa-trash"></i>
+                                                        </button>
+                                                    </td>
+                                                </tr>
+                                                <!-- User 8 -->
+                                                <tr>
+                                                    <td>8</td>
+                                                    <td>
+                                                        <div class="d-flex align-items-center">
+                                                            <img src="https://ui-avatars.com/api/?name=Maryam+Sudi&size=40&background=FD7E14&color=fff" 
+                                                                 class="rounded-circle me-2" 
+                                                                 alt="User"
+                                                                 style="width: 35px; height: 35px;">
+                                                            <div>
+                                                                <strong>Maryam Sudi</strong>
+                                                            </div>
+                                                        </div>
+                                                    </td>
+                                                    <td>maryamsudi@email.com</td>
+                                                    <td><span class="badge bg-secondary">User</span></td>
+                                                    <td>Jul 05, 2026</td>
+                                                    <td>
+                                                        <button class="btn btn-sm btn-outline-danger" title="Delete">
+                                                            <i class="fas fa-trash"></i>
+                                                        </button>
+                                                    </td>
+                                                </tr>
+                                            </tbody>
+                                        </table>
                                     </div>
-                                        </div>
-                                    </td>
-                                    <td>fadheel123@email.com</td>
-                                    <td><span class="badge bg-danger">Admin</span></td>
-                                   <td><span class="badge bg-success">Active</span></td>
-                                    <td>Jun 29, 2026</td>
-                                    <td>
-                                        <button class="btn btn-sm btn-outline-primary me-1" title="Edit">
-                                            <i class="fas fa-edit"></i>
-                                     </button>
-                                        <button class="btn btn-sm btn-outline-danger" title="Delete">
-                                            <i class="fas fa-trash"></i>
-                                        </button>
-                                    </td>
-                                </tr>
-                                <!-- User 3 -->
-                                <tr>
-                                    <td>3</td>
-                                    <td>
-                                        <div class="d-flex align-items-center">
-                                            <img src="https://ui-avatars.com/api/?name=Amina+Ali&size=40&background=0DCAF0&color=fff" 
-                                                 class="rounded-circle me-2" 
-                                                 alt="User"
-                                                 style="width: 35px; height: 35px;">
-                                            <div>
-                                                <strong>Amina Omar</strong>
-                                                     </div>
-                                        </div>
-                                    </td>
-                                    <td>aminaomar553@email.com</td>
-                                    <td><span class="badge bg-primary">Counselor</span></td>
-                                    <td><span class="badge bg-success">Active</span></td>
-                                    <td>Jun 30, 2026</td>
-                                    <td>
-                                        <button class="btn btn-sm btn-outline-primary me-1" title="Edit">
-                                            <i class="fas fa-edit"></i>
-                                        </button>
-                                        <button class="btn btn-sm btn-outline-danger" title="Delete">
-                                            <i class="fas fa-trash"></i>
-                                        </button>
-                                    </td>
-                                </tr>
-                                <!-- User 4 -->
-                                <tr>
-                                    <td>4</td>
-                                    <td>
-                                        <div class="d-flex align-items-center">
-                                            <img src="https://ui-avatars.com/api/?name=Fatma+Juma&size=40&background=FFC107&color=000" 
-                                                 class="rounded-circle me-2" 
-                                                 alt="User"
-                                                 style="width: 35px; height: 35px;">
-                                            <div>
-                                                <strong>Asha Ussi</strong>
-                                        </div>
-                                        </div>
-                                    </td>
-                                    <td>ashaussi58@email.com</td>
-                                    <td><span class="badge bg-secondary">User</span></td>
-                                    <td><span class="badge bg-success">Active</span></td>
-                                    <td>Jul 01, 2026</td>
-                                    <td>
-                                        <button class="btn btn-sm btn-outline-primary me-1" title="Edit">
-                                            <i class="fas fa-edit"></i>
-                                        </button>
-                                        <button class="btn btn-sm btn-outline-danger" title="Delete">
-                                            <i class="fas fa-trash"></i>
-                                        </button>
-                                    </td>
-                                </tr>
-                                <!-- User 5 -->
-                                <tr>
-                                    <td>5</td>
-                                    <td>
-                                        <div class="d-flex align-items-center">
-                                            <img src="https://ui-avatars.com/api/?name=Ussi+Haji&size=40&background=DC3545&color=fff" 
-                                                 class="rounded-circle me-2" 
-                                                 alt="User"
-                                                 style="width: 35px; height: 35px;">
-                                            <div>
-                                                <strong>Ussi Haji</strong>
-                                          </div>
-                                        </div>
-                                    </td>
-                                    <td>ussihaji@email.com</td>
-                                    <td><span class="badge bg-primary">Counselor</span></td>
-                                    <td><span class="badge bg-warning">Inactive</span></td>
-                                    <td>Jul 02, 2026</td>
-                                    <td>
-                                        <button class="btn btn-sm btn-outline-primary me-1" title="Edit">
-                                            <i class="fas fa-edit"></i>
-                                        </button>
-                                        <button class="btn btn-sm btn-outline-danger" title="Delete">
-                                            <i class="fas fa-trash"></i>
-                                        </button>
-                                    </td>
-                                </tr>
-                                <!-- User 6 -->
-                                <tr>
-                                    <td>6</td>
-                                    <td>
-                                        <div class="d-flex align-items-center">
-                                            <img src="https://ui-avatars.com/api/?name=Asha+Bakari&size=40&background=6F42C1&color=fff" 
-                                                 class="rounded-circle me-2" 
-                                                 alt="User"
-                                                 style="width: 35px; height: 35px;">
-                                            <div>
-                                                <strong>Zulekha Issa</strong>
-                                            </div>
-                                        </div>
-                                    </td>
-                                    <td>zulisaa8678@email.com</td>
-                                    <td><span class="badge bg-secondary">User</span></td>
-                                    <td><span class="badge bg-success">Active</span></td>
-                                    <td>Jul 03, 2026</td>
-                                    <td>
-                                        <button class="btn btn-sm btn-outline-primary me-1" title="Edit">
-                                            <i class="fas fa-edit"></i>
-                                        </button>
-                                        <button class="btn btn-sm btn-outline-danger" title="Delete">
-                                            <i class="fas fa-trash"></i>
-                                        </button>
-                                    </td>
-                                </tr>
-                                <!-- User 7 -->
-                                <tr>
-                                    <td>7</td>
-                                    <td>
-                                        <div class="d-flex align-items-center">
-                                            <img src="https://ui-avatars.com/api/?name=Ali+Juma&size=40&background=20C997&color=fff" 
-                                                 class="rounded-circle me-2" 
-                                                 alt="User"
-                                                 style="width: 35px; height: 35px;">
-                                            <div>
-                                                <strong>Ali Juma</strong>
-                                                   </div>
-                                        </div>
-                                    </td>
-                                    <td>alijuma@email.com</td>
-                                    <td><span class="badge bg-secondary">User</span></td>
-                                    <td><span class="badge bg-danger">Suspended</span></td>
-                                    <td>Jul 04, 2026</td>
-                                    <td>
-                                        <button class="btn btn-sm btn-outline-primary me-1" title="Edit">
-                                            <i class="fas fa-edit"></i>
-                                        </button>
-                                        <button class="btn btn-sm btn-outline-danger" title="Delete">
-                                            <i class="fas fa-trash"></i>
-                                        </button>
-                                    </td>
-                                </tr>
-                                <!-- User 8 -->
-                                <tr>
-                                    <td>8</td>
-                                    <td>
-                                        <div class="d-flex align-items-center">
-                                            <img src="https://ui-avatars.com/api/?name=Maryam+Said&size=40&background=FD7E14&color=fff" 
-                                                 class="rounded-circle me-2" 
-                                                 alt="User"
-                                                 style="width: 35px; height: 35px;">
-                                            <div>
-                                                <strong>Maryam Sudi</strong>
-                                                         </div>
-                                        </div>
-                                    </td>
-                                    <td>maryamsudi@email.com</td>
-                                    <td><span class="badge bg-secondary">User</span></td>
-                                    <td><span class="badge bg-success">Active</span></td>
-                                    <td>Jul 05, 2026</td>
-                                    <td>
-                                        <button class="btn btn-sm btn-outline-primary me-1" title="Edit">
-                                            <i class="fas fa-edit"></i>
-                                        </button>
-                                        <button class="btn btn-sm btn-outline-danger" title="Delete">
-                                            <i class="fas fa-trash"></i>
-                                        </button>
-                                    </td>
-                                </tr>
-                            </tbody>
-                        </table>
-                    </div>
 
-                    <!-- Pagination -->
-                    <nav aria-label="Page navigation">
-                        <ul class="pagination justify-content-center">
-                            <li class="page-item disabled">
-                                <span class="page-link">Previous</span>
-                            </li>
-                            <li class="page-item active"><span class="page-link">1</span></li>
-                            <li class="page-item"><a class="page-link" href="#">2</a></li>
-                            <li class="page-item"><a class="page-link" href="#">3</a></li>
-                            <li class="page-item"><a class="page-link" href="#">4</a></li>
-                            <li class="page-item"><a class="page-link" href="#">5</a></li>
-                            <li class="page-item">
-                                <a class="page-link" href="#">Next</a>
-                            </li>
-                        </ul>
-                    </nav>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                 </div>
-            </div>
+            </main>
+            <!-- ============================================ -->
+            <!-- END MAIN CONTENT -->
+            <!-- ============================================ -->
+
+
         </div>
+        <!-- ============================================ -->
+        <!-- END CONTENT WRAP -->
+        <!-- ============================================ -->
+
+
     </div>
-</div>
-{% endblock %}
+    <!-- ============================================ -->
+    <!-- END APP SHELL -->
+    <!-- ============================================ -->
+
+
+    <!-- Bootstrap JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+
+    <!-- Custom JS -->
+    <script src="{% static 'js/main.js' %}"></script>
+
+</body>
+</html>

@@ -12,59 +12,68 @@
     </div>
 
     <!-- Stats Cards -->
-    <div class="row mb-4">
-        <div class="col-md-3 col-6 mb-3">
-            <div class="card bg-primary text-white stat-card">
-                <div class="card-body">
-                    <h5 class="card-title"><i class="fas fa-heart"></i> Mood Score</h5>
-                    <h2 class="mb-0">75%</h2>
-                    <small>Last 30 days</small>
-                </div>
-            </div>
-        </div>
-        <div class="col-md-3 col-6 mb-3">
-            <div class="card bg-success text-white stat-card">
-                <div class="card-body">
-                    <h5 class="card-title"><i class="fas fa-clipboard-check"></i> Assessments</h5>
-                    <h2 class="mb-0">3</h2>
-                    <small>Total completed</small>
-                </div>
-            </div>
-        </div>
-        <div class="col-md-3 col-6 mb-3">
-            <div class="card bg-info text-white stat-card">
-                <div class="card-body">
-                    <h5 class="card-title"><i class="fas fa-calendar-check"></i> Appointments</h5>
-                    <h2 class="mb-0">2</h2>
-                    <small>Upcoming</small>
-                </div>
-            </div>
-        </div>
-        <div class="col-md-3 col-6 mb-3">
-            <div class="card bg-warning text-white stat-card">
-                <div class="card-body">
-                    <h5 class="card-title"><i class="fas fa-tasks"></i> Resources</h5>
-                    <h2 class="mb-0">5</h2>
-                    <small>Viewed this week</small>
-                </div>
+<div class="row mb-4">
+    <div class="col-md-3 col-6 mb-3">
+        <div class="card bg-primary text-white stat-card">
+            <div class="card-body">
+                <h5 class="card-title"><i class="fas fa-heart"></i> Mood Entries</h5>
+                <h2 class="mb-0">{{ mood_count|default:0 }}</h2>
+                <small>Total entries</small>
             </div>
         </div>
     </div>
+    <div class="col-md-3 col-6 mb-3">
+        <div class="card bg-success text-white stat-card">
+            <div class="card-body">
+                <h5 class="card-title"><i class="fas fa-clipboard-check"></i> Assessments</h5>
+                <h2 class="mb-0">{{ assessment_count|default:0 }}</h2>
+                <small>Total completed</small>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-3 col-6 mb-3">
+        <div class="card bg-info text-white stat-card">
+            <div class="card-body">
+                <h5 class="card-title"><i class="fas fa-calendar-check"></i> Appointments</h5>
+                <h2 class="mb-0">{{ appointment_count|default:0 }}</h2>
+                <small>Upcoming</small>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-3 col-6 mb-3">
+        <div class="card bg-warning text-white stat-card">
+            <div class="card-body">
+                <h5 class="card-title"><i class="fas fa-tasks"></i> Resources</h5>
+                <h2 class="mb-0">{{ resource_count|default:0 }}</h2>
+                <small>Available</small>
+            </div>
+        </div>
+    </div>
+</div>
 
-    <!-- Daily Quote -->
-    <div class="row mb-4">
-        <div class="col-12">
-            <div class="card bg-light border-0">
-                <div class="card-body text-center">
-                    <i class="fas fa-quote-left fa-2x text-primary mb-2"></i>
+     <!-- Daily Quote -->
+  <!-- Daily Quote -->
+<div class="row mb-4">
+    <div class="col-12">
+        <div class="card bg-light border-0">
+            <div class="card-body text-center">
+                <i class="fas fa-quote-left fa-2x text-primary mb-2"></i>
+                {% if daily_quote %}
                     <blockquote class="blockquote">
-                        <p class="mb-0 fs-5">"The only way out of the darkness is to keep moving forward."</p>
-                        <footer class="blockquote-footer mt-2">Anonymous</footer>
+                        <p class="mb-0 fs-5">"{{ daily_quote.text }}"</p>
+                        {% if daily_quote.author %}
+                            <footer class="blockquote-footer mt-2">{{ daily_quote.author }}</footer>
+                        {% endif %}
                     </blockquote>
-                </div>
+                {% else %}
+                    <blockquote class="blockquote">
+                        <p class="mb-0 fs-5">"No quote available for today"</p>
+                    </blockquote>
+                {% endif %}
             </div>
         </div>
     </div>
+</div>
 
     <!-- Recent Activity -->
     <div class="row">

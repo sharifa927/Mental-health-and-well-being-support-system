@@ -12,9 +12,6 @@
     <!-- Font Awesome Icons -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 
-    <!-- Bootstrap Icons -->
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css">
-
     <!-- Google Fonts -->
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
 
@@ -26,19 +23,19 @@
 
     {% block extra_css %}{% endblock %}
 </head>
-<body>
+<body class="{% if request.path == '/' %}home-page{% endif %}">
 
-    <!-- Messages/Alerts -->
-    <div class="container mt-3">
-        {% if messages %}
-            {% for message in messages %}
-                <div class="alert alert-{{ message.tags }} alert-dismissible fade show" role="alert">
-                    {{ message }}
-                    <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
-                </div>
-            {% endfor %}
-        {% endif %}
-    </div>
+  <!-- Messages/Alerts -->
+<div class="container mt-3">
+    {% if messages %}
+        {% for message in messages %}
+            <div class="alert alert-{{ message.tags }} alert-dismissible fade show" role="alert">
+                {{ message }}
+                <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+            </div>
+        {% endfor %}
+    {% endif %}
+</div>
 
     <!-- App Layout -->
     <div class="app-shell">
@@ -46,14 +43,14 @@
         <!-- Sidebar Backdrop (mobile) -->
         <div class="sidebar-backdrop" id="sidebarBackdrop"></div>
 
-        <!-- Sidebar -->
+        <!-- SIDEBAR -->
+        {% if request.path != '/' and request.path != '/about/' and request.path != '/contact/' %}
         <aside class="sidebar" id="appSidebar">
             <div class="sidebar-top">
                 <a class="brand" href="/">
                     <span class="brand-icon"><i class="fas fa-heartbeat"></i></span>
                     <span class="brand-text">Mental Health</span>
                 </a>
-
                 <button class="icon-btn" id="sidebarCollapseBtn" type="button" aria-label="Collapse sidebar">
                     <i class="fas fa-chevron-left"></i>
                 </button>
@@ -61,81 +58,58 @@
 
             <nav class="sidebar-nav" aria-label="Primary">
                 <ul class="sidebar-menu" id="sidebarMenu">
+
                     <li class="sidebar-item">
-                        <a class="sidebar-link" href="/dashboard/" data-active="Dashboard">
+                        <a class="sidebar-link" href="/dashboard/">
                             <span class="sidebar-ic"><i class="fas fa-tachometer-alt"></i></span>
                             <span class="sidebar-txt">Dashboard</span>
                         </a>
                     </li>
+
                     <li class="sidebar-item">
-                        <a class="sidebar-link" href="/assessment/" data-active="Assessment">
+                        <a class="sidebar-link" href="/assessment/">
                             <span class="sidebar-ic"><i class="fas fa-clipboard-list"></i></span>
                             <span class="sidebar-txt">Assessment</span>
                         </a>
                     </li>
+
                     <li class="sidebar-item">
-                        <a class="sidebar-link" href="/mood-tracker/" data-active="Mood Tracker">
+                        <a class="sidebar-link" href="/mood-tracker/">
                             <span class="sidebar-ic"><i class="fas fa-chart-line"></i></span>
                             <span class="sidebar-txt">Mood Tracker</span>
                         </a>
                     </li>
+
                     <li class="sidebar-item">
-                        <a class="sidebar-link" href="/counselors/" data-active="Counselors">
+                        <a class="sidebar-link" href="/counselors/">
                             <span class="sidebar-ic"><i class="fas fa-user-md"></i></span>
                             <span class="sidebar-txt">Counselors</span>
                         </a>
                     </li>
+
                     <li class="sidebar-item">
-                        <a class="sidebar-link" href="/appointments/" data-active="Appointments">
+                        <a class="sidebar-link" href="/appointments/">
                             <span class="sidebar-ic"><i class="fas fa-calendar"></i></span>
                             <span class="sidebar-txt">Appointments</span>
                         </a>
                     </li>
+
                     <li class="sidebar-item">
-                        <a class="sidebar-link" href="/resources/" data-active="Resources">
+                        <a class="sidebar-link" href="/resources/">
                             <span class="sidebar-ic"><i class="fas fa-book"></i></span>
                             <span class="sidebar-txt">Resources</span>
                         </a>
                     </li>
 
-                    <li class="sidebar-item">
-                        <a class="sidebar-link" href="#" data-active="Notifications" onclick="return false;">
-                            <span class="sidebar-ic">
-                                <span class="notification-dot" aria-hidden="true"></span>
-                                <i class="fas fa-bell"></i>
-                            </span>
-                            <span class="sidebar-txt">Notifications</span>
-                        </a>
-                    </li>
+                    <li class="sidebar-divider"></li>
 
                     <li class="sidebar-item">
-                        <a class="sidebar-link" href="/profile/" data-active="Profile">
+                        <a class="sidebar-link" href="/profile/">
                             <span class="sidebar-ic"><i class="fas fa-user"></i></span>
                             <span class="sidebar-txt">Profile</span>
                         </a>
                     </li>
 
-                    <li class="sidebar-divider"></li>
-
-                    <li class="sidebar-item sidebar-group">
-                        <button class="sidebar-link sidebar-toggle" type="button" data-group-toggle="settings">
-                            <span class="sidebar-ic"><i class="fas fa-gear"></i></span>
-                            <span class="sidebar-txt">Settings</span>
-                            <span class="sidebar-chevron"><i class="fas fa-chevron-down"></i></span>
-                        </button>
-                        <ul class="sidebar-submenu" id="settingsSubmenu">
-                            <li>
-                                <a class="sidebar-sublink" href="#" onclick="return false;" data-active="Change Password">
-                                    <i class="fas fa-key"></i><span>Change Password</span>
-                                </a>
-                            </li>
-                            <li>
-                                <a class="sidebar-sublink" href="/logout/" data-active="Logout">
-                                    <i class="fas fa-right-from-bracket"></i><span>Logout</span>
-                                </a>
-                            </li>
-                        </ul>
-                    </li>
                 </ul>
             </nav>
 
@@ -143,26 +117,24 @@
                 <small class="sidebar-foot">v1.0</small>
             </div>
         </aside>
+        {% endif %}
 
-        <!-- Content Area -->
+
+
+        <!-- CONTENT WRAP -->
         <div class="content-wrap">
-            <!-- Content header (per-page) -->
+
+  
+            {% if request.path != '/' and request.path != '/about/' and request.path != '/contact/' %}
             <header class="content-header">
+
+                <!-- Mobile Sidebar Toggle -->
                 <button class="icon-btn mobile-only" id="mobileSidebarBtn" type="button" aria-label="Open sidebar">
                     <i class="fas fa-bars"></i>
                 </button>
 
-                <div class="header-search">
-                    <i class="fas fa-search" aria-hidden="true"></i>
-                    <input type="text" class="form-control" placeholder="Search..." aria-label="Search" />
-                </div>
-
+                <!-- User Menu - TOP RIGHT -->
                 <div class="header-actions">
-                    <button class="icon-btn" type="button" aria-label="Notifications">
-                        <span class="badge-dot">3</span>
-                        <i class="fas fa-bell"></i>
-                    </button>
-
                     <div class="user-menu dropdown">
                         <button class="user-btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
                             <span class="avatar">U</span>
@@ -170,82 +142,63 @@
                                 <span class="user-name">User</span>
                             </span>
                         </button>
-
                         <ul class="dropdown-menu dropdown-menu-end">
-                            <li><a class="dropdown-item" href="/profile/"><i class="fas fa-user me-2"></i> Profile</a></li>
-                            <li><a class="dropdown-item" href="/logout/"><i class="fas fa-right-from-bracket me-2"></i> Logout</a></li>
+
+    <li><a class="dropdown-item" href="/profile/"><i class="fas fa-user me-2"></i> Profile</a></li>
+    <li><hr class="dropdown-divider"></li>
+    <li><a class="dropdown-item" href="/accounts/logout/"><i class="fas fa-sign-out-alt me-2"></i> Logout</a></li>
                         </ul>
                     </div>
                 </div>
+
             </header>
+            {% endif %}
+  
 
-            <main class="content-main" id="contentMain">
-                {% block content %}{% endblock %}
+            <!-- MAIN CONTENT -->
+            <main class="{% if request.path == '/' %}py-4{% else %}content-main{% endif %}" id="contentMain">
+                {% block content %}
+                {% endblock %}
             </main>
-
-            <!-- Footer -->
-            <footer class="bg-dark text-white py-4 mt-auto">
+ 
+   
+            {% if request.path == '/' %}
+            <footer>
                 <div class="container">
-                    <div class="row">
-                        <div class="col-md-4 mb-3">
+                    <div class="row g-4">
+
+                        <!-- Column 1: Brand -->
+                        <div class="col-md-6">
                             <h5><i class="fas fa-heartbeat"></i> Mental Health Support</h5>
-                            <p class="text-light opacity-75" style="font-size: 0.9rem;">
-                                Your comprehensive platform for mental health and well-being support.
+                            <p class="footer-text">
+                                Your comprehensive platform for mental health and well-being support
                             </p>
-                            <p class="text-light opacity-50 small">
+                            <p class="footer-small">
                                 Developed by Sharifa Mohamed Ali &amp; Fadhil Mohammed Ali<br>
                                 State University of Zanzibar (SUZA) | 2026
                             </p>
-                            <p class="text-light opacity-75 small">
-                                <i class="fas fa-phone"></i> +255 770 678 962<br>
-                                <i class="fas fa-envelope"></i> support@mentalhealth.com
-                            </p>
                         </div>
 
-                        <div class="col-md-4 mb-3">
-                            <h5>Quick Links</h5>
-                            <ul class="list-unstyled" style="font-size: 0.9rem;">
-                                <li class="mb-2">
-                                    <a href="/about/" class="text-light opacity-75 text-decoration-none">
-                                        <i class="fas fa-chevron-right fa-xs"></i> About Us
-                                    </a>
-                                </li>
-                                <li class="mb-2">
-                                    <a href="/contact/" class="text-light opacity-75 text-decoration-none">
-                                        <i class="fas fa-chevron-right fa-xs"></i> Contact
-                                    </a>
-                                </li>
-                                <li class="mb-2">
-                                    <a href="/terms/" class="text-light opacity-75 text-decoration-none">
-                                        <i class="fas fa-chevron-right fa-xs"></i> Terms of Service
-                                    </a>
-                                </li>
+                        <!-- Column 2: Quick Links -->
+                        <div class="col-md-6">
+                            <h5 class="text-end">Quick Links</h5>
+                            <ul class="footer-links text-end">
+                                <li><a href="/about/"><i class="fas fa-chevron-right fa-xs"></i> About Us</a></li>
+                                <li><a href="/contact/"><i class="fas fa-chevron-right fa-xs"></i> Contact</a></li>
                             </ul>
                         </div>
 
-                        <div class="col-md-4 mb-3">
-                            <h5>Connect With Us</h5>
-                            <div class="social-icons">
-                                <a href="#" class="text-light opacity-75 me-3"><i class="fab fa-facebook fa-lg"></i></a>
-                                <a href="#" class="text-light opacity-75 me-3"><i class="fab fa-twitter fa-lg"></i></a>
-                                <a href="#" class="text-light opacity-75 me-3"><i class="fab fa-instagram fa-lg"></i></a>
-                                <a href="#" class="text-light opacity-75 me-3"><i class="fab fa-youtube fa-lg"></i></a>
-                            </div>
-
-                            <div class="mt-3 p-2" style="background-color: rgba(212, 206, 207, 0.2); border-radius: 8px;">
-                                <p class="mb-0 small">
-                                    <i class="fas fa-phone text-danger"></i>
-                                    <strong>Phone:</strong> <span class="text-light">+255 779 678 943</span>
-                                </p>
-                            </div>
-
-                            <p class="mt-3 text-light opacity-50 small">&copy; 2026 SUZA - All rights reserved</p>
-                        </div>
                     </div>
                 </div>
             </footer>
+            {% endif %}
+
+
         </div>
+ 
+
     </div>
+   
 
     <!-- Bootstrap JS -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
@@ -254,5 +207,6 @@
     <script src="{% static 'js/main.js' %}"></script>
 
     {% block extra_js %}{% endblock %}
+
 </body>
 </html>
