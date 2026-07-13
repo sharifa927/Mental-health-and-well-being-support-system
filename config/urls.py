@@ -1,6 +1,7 @@
-from django.contrib import admin
+from django.contrib import admin, messages
+from django.contrib.auth.decorators import login_required
 from django.urls import path, include
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 
 # Import views from mental app
 from mental.views import (
@@ -18,8 +19,22 @@ def about(request):
     return render(request, 'about.html')
 
 
+@login_required
 def profile(request):
-    return render(request, 'profile.html')
+    if request.method == 'POST':
+        full_name = request.POST.get('full_name', '').strip()
+        phone = request.POST.get('phone', '').strip()
+        dob = request.POST.get('dob', '').strip()
+
+        user = request.user
+        user.full_name = full_name
+        user.phone = phone
+        user.dob = dob if dob else None
+        user.save()
+        messages.success(request, 'Profile updated successfully.')
+        return redirect('profile')
+
+    return render(request, 'profile.html', {'user': request.user})
 
 
 def admin_dashboard(request):
