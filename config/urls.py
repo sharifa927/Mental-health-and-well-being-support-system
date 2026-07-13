@@ -23,7 +23,20 @@ def profile(request):
 
 
 def admin_dashboard(request):
-    return render(request, 'admin_dashboard.html')
+    from accounts.models import CustomUser
+    from mental.models import Appointment, MoodEntry, Assessment
+    from content.models import Resource, Quote
+
+    context = {
+        'total_users': CustomUser.objects.filter(role=CustomUser.Role.USER).count(),
+        'total_counselors': CustomUser.objects.filter(role=CustomUser.Role.COUNSELOR, is_counselor_active=True).count(),
+        'total_appointments': Appointment.objects.count(),
+        'total_resources': Resource.objects.count(),
+        'total_quotes': Quote.objects.count(),
+        'total_mood_entries': MoodEntry.objects.count(),
+        'total_assessments': Assessment.objects.count(),
+    }
+    return render(request, 'admin_dashboard.html', context)
 
 
 def counselor_dashboard(request):
@@ -43,7 +56,61 @@ def admin_users(request):
 
 
 def admin_counselors(request):
-    return render(request, 'admin_counselors.html')
+    from django.contrib import messages
+    from accounts.models import CustomUser
+
+    # Handle add / delete actions
+    if request.method == "POST":
+        action = request.POST.get("action")
+        if action == "add":
+            full_name = request.POST.get("full_name")
+            email = request.POST.get("email")
+            specialization = request.POST.get("specialization")
+            experience_years = request.POST.get("experience_years") or 0
+            avail_text = request.POST.get("availability", "")
+            availability = []
+            for line in avail_text.splitlines():
+                parts = line.strip()
+                if not parts:
+                    continue
+                try:
+                    day, times = parts.split()
+                    start, end = times.split("-")
+                    availability.append({"day": day, "start": start, "end": end})
+                except Exception:
+                    # ignore malformed lines
+                    continue
+
+            try:
+                # create a counselor account with a random password (admin can share with counselor later)
+                user = CustomUser.objects.create_user(
+                    email=email,
+                    password=CustomUser.objects.make_random_password(),
+                    full_name=full_name,
+                    role=CustomUser.Role.COUNSELOR,
+                    specialization=specialization,
+                    experience_years=int(experience_years) if experience_years else 0,
+                    is_counselor_active=True,
+                )
+                user.availability = availability
+                user.save()
+                messages.success(request, "Counselor added successfully.")
+            except Exception as e:
+                messages.error(request, f"Could not add counselor: {e}")
+            return render(request, 'admin_counselors.html', {"counselors": CustomUser.objects.filter(role=CustomUser.Role.COUNSELOR)})
+
+        if action == "delete":
+            try:
+                cid = request.POST.get("counselor_id")
+                c = CustomUser.objects.get(pk=cid, role=CustomUser.Role.COUNSELOR)
+                c.delete()
+                messages.success(request, "Counselor deleted.")
+            except Exception as e:
+                messages.error(request, f"Could not delete counselor: {e}")
+            return render(request, 'admin_counselors.html', {"counselors": CustomUser.objects.filter(role=CustomUser.Role.COUNSELOR)})
+
+    counselors = CustomUser.objects.filter(role=CustomUser.Role.COUNSELOR)
+    return render(request, 'admin_counselors.html', {"counselors": counselors})
 
 
 def admin_resources(request):

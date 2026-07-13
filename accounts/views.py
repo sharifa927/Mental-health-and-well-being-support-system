@@ -54,8 +54,10 @@ def login_view(request):
             # Clear old messages (like "account created") before adding new ones
             storage = messages.get_messages(request)
             storage.used = True
-            # Add login success message
-            messages.success(request, "Login successful. Welcome back!")
+            name = user.full_name or user.email or "user"
+            messages.success(request, f"Login successful. Welcome back, {name}!")
+            if user.is_superuser or getattr(user, 'role', None) == CustomUser.Role.ADMIN:
+                return redirect("admin_dashboard")
             return redirect("dashboard")
         messages.error(request, "Invalid email or password.")
         return render(request, "login.html")

@@ -45,6 +45,8 @@ class CustomUser(AbstractUser):
     specialization = models.CharField(max_length=255, blank=True)
     experience_years = models.PositiveIntegerField(default=0)
     is_counselor_active = models.BooleanField(default=True)
+    # Availability stored as a list of {day, start, end} objects, e.g. [{"day":"Mon","start":"09:00","end":"12:00"}]
+    availability = models.JSONField(blank=True, null=True)
 
     USERNAME_FIELD = "email"
     REQUIRED_FIELDS = []

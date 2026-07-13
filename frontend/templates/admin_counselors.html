@@ -162,9 +162,9 @@
                                     <p class="text-muted">View and manage all counselors in the system</p>
                                 </div>
                                 <div>
-                                    <a href="#" class="btn btn-success">
+                                    <button class="btn btn-success" data-bs-toggle="modal" data-bs-target="#addCounselorModal">
                                         <i class="fas fa-plus-circle"></i> Add Counselor
-                                    </a>
+                                    </button>
                                 </div>
                             </div>
                         </div>
@@ -176,7 +176,7 @@
                             <div class="card shadow-sm border-0">
                                 <div class="card-header bg-white d-flex justify-content-between align-items-center">
                                     <h5 class="mb-0"><i class="fas fa-list"></i> All Counselors</h5>
-                                    <span class="badge bg-success">12 Counselors</span>
+                                    <span class="badge bg-success">{{ counselors.count }}</span>
                                 </div>
                                 <div class="card-body">
                                     <div class="table-responsive">
@@ -191,29 +191,39 @@
                                                 </tr>
                                             </thead>
                                             <tbody>
-                                                <!-- Counselor 1 -->
+                                                {% for c in counselors %}
                                                 <tr>
-                                                    <td>1</td>
+                                                    <td>{{ forloop.counter }}</td>
                                                     <td>
                                                         <div class="d-flex align-items-center">
-                                                            <img src="https://ui-avatars.com/api/?name=Ramla+Nour&size=40&background=0DCAF0&color=fff" 
+                                                            <img src="https://ui-avatars.com/api/?name={{ c.full_name|urlencode }}&size=40&background=0DCAF0&color=fff" 
                                                                  class="rounded-circle me-2" 
                                                                  alt="Counselor"
                                                                  style="width: 35px; height: 35px;">
                                                             <div>
-                                                                <strong>Ramla Nour</strong>
-                                                                <p class="text-muted small mb-0">C-001</p>
+                                                                <strong>{{ c.full_name|default:'-' }}</strong>
+                                                                <p class="text-muted small mb-0">C-{{ c.pk|stringformat:"03d" }}</p>
                                                             </div>
                                                         </div>
                                                     </td>
-                                                    <td>nourramla57@email.com</td>
-                                                    <td><span class="badge bg-primary">Mental Health</span></td>
+                                                    <td>{{ c.email }}</td>
+                                                    <td><span class="badge bg-primary">{{ c.specialization|default:'General' }}</span></td>
                                                     <td>
-                                                        <button class="btn btn-sm btn-outline-danger" title="Delete">
-                                                            <i class="fas fa-trash"></i>
-                                                        </button>
+                                                        <form method="post" action="" style="display:inline">
+                                                            {% csrf_token %}
+                                                            <input type="hidden" name="action" value="delete">
+                                                            <input type="hidden" name="counselor_id" value="{{ c.pk }}">
+                                                            <button type="submit" class="btn btn-sm btn-outline-danger" title="Delete">
+                                                                <i class="fas fa-trash"></i>
+                                                            </button>
+                                                        </form>
                                                     </td>
                                                 </tr>
+                                                {% empty %}
+                                                <tr>
+                                                    <td colspan="5" class="text-center">No counselors found.</td>
+                                                </tr>
+                                                {% endfor %}
                                                 <!-- Counselor 2 -->
                                                 <tr>
                                                     <td>2</td>
@@ -360,6 +370,51 @@
 
     <!-- Custom JS -->
     <script src="{% static 'js/main.js' %}"></script>
+
+        <!-- Add Counselor Modal -->
+        <div class="modal fade" id="addCounselorModal" tabindex="-1" aria-labelledby="addCounselorModalLabel" aria-hidden="true">
+            <div class="modal-dialog modal-lg">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="addCounselorModalLabel">Add Counselor</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <form method="post" action="">
+                        {% csrf_token %}
+                        <input type="hidden" name="action" value="add">
+                        <div class="modal-body">
+                            <div class="row g-3">
+                                <div class="col-md-6">
+                                    <label class="form-label">Full name</label>
+                                    <input type="text" name="full_name" class="form-control" required>
+                                </div>
+                                <div class="col-md-6">
+                                    <label class="form-label">Email</label>
+                                    <input type="email" name="email" class="form-control" required>
+                                </div>
+                                <div class="col-md-6">
+                                    <label class="form-label">Specialization</label>
+                                    <input type="text" name="specialization" class="form-control">
+                                </div>
+                                <div class="col-md-6">
+                                    <label class="form-label">Experience Years</label>
+                                    <input type="number" name="experience_years" class="form-control" min="0">
+                                </div>
+                                <div class="col-12">
+                                    <label class="form-label">Availability (one per line: DAY HH:MM-HH:MM)</label>
+                                    <textarea name="availability" class="form-control" placeholder="Mon 09:00-12:00\nTue 14:00-17:00"></textarea>
+                                    <small class="text-muted">Example: <code>Mon 09:00-12:00</code></small>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                            <button type="submit" class="btn btn-primary">Add Counselor</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
 
 </body>
 </html>
