@@ -162,9 +162,9 @@
                                     <p class="text-muted">Add and manage daily motivational quotes</p>
                                 </div>
                                 <div>
-                                    <a href="#" class="btn btn-warning text-dark">
+                                    <button class="btn btn-warning text-dark" data-bs-toggle="modal" data-bs-target="#addQuoteModal">
                                         <i class="fas fa-plus-circle"></i> Add Quote
-                                    </a>
+                                    </button>
                                 </div>
                             </div>
                         </div>
@@ -207,66 +207,24 @@
                                                 </tr>
                                             </thead>
                                             <tbody>
-                                                <!-- Quote 1 -->
+                                                {% for q in quotes %}
                                                 <tr>
-                                                    <td>1</td>
-                                                    <td><em>"Believe you can and you're halfway there."</em></td>
+                                                    <td>{{ forloop.counter }}</td>
+                                                    <td><em>{{ q.text }}</em></td>
                                                     <td>
-                                                        <button class="btn btn-sm btn-outline-danger" title="Delete">
-                                                            <i class="fas fa-trash"></i>
-                                                        </button>
+                                                        <form method="post" action="" style="display:inline">
+                                                            {% csrf_token %}
+                                                            <input type="hidden" name="action" value="delete">
+                                                            <input type="hidden" name="quote_id" value="{{ q.pk }}">
+                                                            <button type="submit" class="btn btn-sm btn-outline-danger" title="Delete">
+                                                                <i class="fas fa-trash"></i>
+                                                            </button>
+                                                        </form>
                                                     </td>
                                                 </tr>
-                                                <!-- Quote 2 -->
-                                                <tr>
-                                                    <td>2</td>
-                                                    <td><em>"The best way to predict the future is to create it."</em></td>
-                                                    <td>
-                                                        <button class="btn btn-sm btn-outline-danger" title="Delete">
-                                                            <i class="fas fa-trash"></i>
-                                                        </button>
-                                                    </td>
-                                                </tr>
-                                                <!-- Quote 3 -->
-                                                <tr>
-                                                    <td>3</td>
-                                                    <td><em>"You are enough just as you are."</em></td>
-                                                    <td>
-                                                        <button class="btn btn-sm btn-outline-danger" title="Delete">
-                                                            <i class="fas fa-trash"></i>
-                                                        </button>
-                                                    </td>
-                                                </tr>
-                                                <!-- Quote 4 -->
-                                                <tr>
-                                                    <td>4</td>
-                                                    <td><em>"Tough times never last, but tough people do."</em></td>
-                                                    <td>
-                                                        <button class="btn btn-sm btn-outline-danger" title="Delete">
-                                                            <i class="fas fa-trash"></i>
-                                                        </button>
-                                                    </td>
-                                                </tr>
-                                                <!-- Quote 5 -->
-                                                <tr>
-                                                    <td>5</td>
-                                                    <td><em>"Every day may not be good, but there is something good in every day."</em></td>
-                                                    <td>
-                                                        <button class="btn btn-sm btn-outline-danger" title="Delete">
-                                                            <i class="fas fa-trash"></i>
-                                                        </button>
-                                                    </td>
-                                                </tr>
-                                                <!-- Quote 6 -->
-                                                <tr>
-                                                    <td>6</td>
-                                                    <td><em>"Your mental health matters. Take care of yourself."</em></td>
-                                                    <td>
-                                                        <button class="btn btn-sm btn-outline-danger" title="Delete">
-                                                            <i class="fas fa-trash"></i>
-                                                        </button>
-                                                    </td>
-                                                </tr>
+                                                {% empty %}
+                                                <tr><td colspan="3" class="text-center">No quotes found.</td></tr>
+                                                {% endfor %}
                                             </tbody>
                                         </table>
                                     </div>
@@ -298,6 +256,41 @@
 
     <!-- Custom JS -->
     <script src="{% static 'js/main.js' %}"></script>
+
+    <!-- Add Quote Modal -->
+    <div class="modal fade" id="addQuoteModal" tabindex="-1" aria-labelledby="addQuoteModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="addQuoteModalLabel">Add Quote</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <form method="post" action="">
+                    {% csrf_token %}
+                    <input type="hidden" name="action" value="add">
+                    <div class="modal-body">
+                        <div class="mb-3">
+                            <label class="form-label">Quote Text</label>
+                            <textarea name="text" class="form-control" rows="3" required></textarea>
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label">Category</label>
+                            <select name="category" class="form-select">
+                                <option value="motivation">Motivation</option>
+                                <option value="inspiration">Inspiration</option>
+                                <option value="wellness">Wellness</option>
+                                <option value="hope">Hope</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                        <button type="submit" class="btn btn-warning text-dark">Add Quote</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
 
 </body>
 </html>

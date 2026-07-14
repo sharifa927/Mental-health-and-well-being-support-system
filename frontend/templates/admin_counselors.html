@@ -224,121 +224,6 @@
                                                     <td colspan="5" class="text-center">No counselors found.</td>
                                                 </tr>
                                                 {% endfor %}
-                                                <!-- Counselor 2 -->
-                                                <tr>
-                                                    <td>2</td>
-                                                    <td>
-                                                        <div class="d-flex align-items-center">
-                                                            <img src="https://ui-avatars.com/api/?name=Aisha+Juma&size=40&background=198754&color=fff" 
-                                                                 class="rounded-circle me-2" 
-                                                                 alt="Counselor"
-                                                                 style="width: 35px; height: 35px;">
-                                                            <div>
-                                                                <strong>Aisha Juma</strong>
-                                                                <p class="text-muted small mb-0">C-002</p>
-                                                            </div>
-                                                        </div>
-                                                    </td>
-                                                    <td>aishajuma@email.com</td>
-                                                    <td><span class="badge bg-info">Clinical Psychology</span></td>
-                                                    <td>
-                                                        <button class="btn btn-sm btn-outline-danger" title="Delete">
-                                                            <i class="fas fa-trash"></i>
-                                                        </button>
-                                                    </td>
-                                                </tr>
-                                                <!-- Counselor 3 -->
-                                                <tr>
-                                                    <td>3</td>
-                                                    <td>
-                                                        <div class="d-flex align-items-center">
-                                                            <img src="https://ui-avatars.com/api/?name=Ali+Haji&size=40&background=FFC107&color=000" 
-                                                                 class="rounded-circle me-2" 
-                                                                 alt="Counselor"
-                                                                 style="width: 35px; height: 35px;">
-                                                            <div>
-                                                                <strong>Ali Haji</strong>
-                                                                <p class="text-muted small mb-0">C-003</p>
-                                                            </div>
-                                                        </div>
-                                                    </td>
-                                                    <td>alihaji87@email.com</td>
-                                                    <td><span class="badge bg-warning text-dark">Therapy</span></td>
-                                                    <td>
-                                                        <button class="btn btn-sm btn-outline-danger" title="Delete">
-                                                            <i class="fas fa-trash"></i>
-                                                        </button>
-                                                    </td>
-                                                </tr>
-                                                <!-- Counselor 4 -->
-                                                <tr>
-                                                    <td>4</td>
-                                                    <td>
-                                                        <div class="d-flex align-items-center">
-                                                            <img src="https://ui-avatars.com/api/?name=Omar+Said&size=40&background=DC3545&color=fff" 
-                                                                 class="rounded-circle me-2" 
-                                                                 alt="Counselor"
-                                                                 style="width: 35px; height: 35px;">
-                                                            <div>
-                                                                <strong>Omar Said</strong>
-                                                                <p class="text-muted small mb-0">C-004</p>
-                                                            </div>
-                                                        </div>
-                                                    </td>
-                                                    <td>omarsaid34@email.com</td>
-                                                    <td><span class="badge bg-danger">Child Psychology</span></td>
-                                                    <td>
-                                                        <button class="btn btn-sm btn-outline-danger" title="Delete">
-                                                            <i class="fas fa-trash"></i>
-                                                        </button>
-                                                    </td>
-                                                </tr>
-                                                <!-- Counselor 5 -->
-                                                <tr>
-                                                    <td>5</td>
-                                                    <td>
-                                                        <div class="d-flex align-items-center">
-                                                            <img src="https://ui-avatars.com/api/?name=Ali+Juma&size=40&background=17A2B8&color=fff" 
-                                                                 class="rounded-circle me-2" 
-                                                                 alt="Counselor"
-                                                                 style="width: 35px; height: 35px;">
-                                                            <div>
-                                                                <strong>Ali Juma</strong>
-                                                                <p class="text-muted small mb-0">C-005</p>
-                                                            </div>
-                                                        </div>
-                                                    </td>
-                                                    <td>alijuma9782@email.com</td>
-                                                    <td><span class="badge bg-secondary">Addiction</span></td>
-                                                    <td>
-                                                        <button class="btn btn-sm btn-outline-danger" title="Delete">
-                                                            <i class="fas fa-trash"></i>
-                                                        </button>
-                                                    </td>
-                                                </tr>
-                                                <!-- Counselor 6 -->
-                                                <tr>
-                                                    <td>6</td>
-                                                    <td>
-                                                        <div class="d-flex align-items-center">
-                                                            <img src="https://ui-avatars.com/api/?name=Maryam+Said&size=40&background=6F42C1&color=fff" 
-                                                                 class="rounded-circle me-2" 
-                                                                 alt="Counselor"
-                                                                 style="width: 35px; height: 35px;">
-                                                            <div>
-                                                                <strong>Maryam Said</strong>
-                                                                <p class="text-muted small mb-0">C-006</p>
-                                                            </div>
-                                                        </div>
-                                                    </td>
-                                                    <td>maryamsaid21@email.com</td>
-                                                    <td><span class="badge bg-purple" style="background: #6f42c1;">Marriage</span></td>
-                                                    <td>
-                                                        <button class="btn btn-sm btn-outline-danger" title="Delete">
-                                                            <i class="fas fa-trash"></i>
-                                                        </button>
-                                                    </td>
-                                                </tr>
                                             </tbody>
                                         </table>
                                     </div>
@@ -379,7 +264,7 @@
                         <h5 class="modal-title" id="addCounselorModalLabel">Add Counselor</h5>
                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                     </div>
-                    <form method="post" action="">
+                    <form method="post" action="" id="addCounselorForm">
                         {% csrf_token %}
                         <input type="hidden" name="action" value="add">
                         <div class="modal-body">
@@ -401,9 +286,11 @@
                                     <input type="number" name="experience_years" class="form-control" min="0">
                                 </div>
                                 <div class="col-12">
-                                    <label class="form-label">Availability (one per line: DAY HH:MM-HH:MM)</label>
-                                    <textarea name="availability" class="form-control" placeholder="Mon 09:00-12:00\nTue 14:00-17:00"></textarea>
-                                    <small class="text-muted">Example: <code>Mon 09:00-12:00</code></small>
+                                    <label class="form-label">Availability</label>
+                                    <div id="availability-list"></div>
+                                    <button type="button" class="btn btn-sm btn-outline-primary mt-2" id="addAvailabilityBtn">Add Availability</button>
+                                    <input type="hidden" name="availability_json" id="availability_json">
+                                    <small class="text-muted d-block mt-2">Add day and time slots for counselor availability.</small>
                                 </div>
                             </div>
                         </div>
@@ -415,6 +302,49 @@
                 </div>
             </div>
         </div>
+
+    <script>
+    (function(){
+        const availList = document.getElementById('availability-list');
+        const addBtn = document.getElementById('addAvailabilityBtn');
+        const form = document.getElementById('addCounselorForm');
+
+        function addRow(day='', start='', end=''){
+            const row = document.createElement('div');
+            row.className = 'd-flex gap-2 align-items-center mb-2';
+            row.innerHTML = `
+                <select name="_day" class="form-select form-select-sm" style="width:140px">
+                    <option value="Mon" ${day=='Mon'? 'selected':''}>Mon</option>
+                    <option value="Tue" ${day=='Tue'? 'selected':''}>Tue</option>
+                    <option value="Wed" ${day=='Wed'? 'selected':''}>Wed</option>
+                    <option value="Thu" ${day=='Thu'? 'selected':''}>Thu</option>
+                    <option value="Fri" ${day=='Fri'? 'selected':''}>Fri</option>
+                    <option value="Sat" ${day=='Sat'? 'selected':''}>Sat</option>
+                    <option value="Sun" ${day=='Sun'? 'selected':''}>Sun</option>
+                </select>
+                <input type="time" name="_start" class="form-control form-control-sm" value="${start}">
+                <input type="time" name="_end" class="form-control form-control-sm" value="${end}">
+                <button type="button" class="btn btn-sm btn-outline-danger remove-availability">Remove</button>
+            `;
+            availList.appendChild(row);
+            row.querySelector('.remove-availability').addEventListener('click', ()=> row.remove());
+        }
+
+        addBtn.addEventListener('click', ()=> addRow());
+
+        form.addEventListener('submit', function(e){
+            const rows = availList.querySelectorAll('div');
+            const out = [];
+            rows.forEach(r=>{
+                const day = r.querySelector('select[name="_day"]').value;
+                const start = r.querySelector('input[name="_start"]').value;
+                const end = r.querySelector('input[name="_end"]').value;
+                if(day && start && end){ out.push({day, start, end}); }
+            });
+            document.getElementById('availability_json').value = JSON.stringify(out);
+        });
+    })();
+    </script>
 
 </body>
 </html>

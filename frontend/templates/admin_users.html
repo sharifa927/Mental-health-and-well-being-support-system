@@ -192,190 +192,45 @@
                                                 </tr>
                                             </thead>
                                             <tbody>
-                                                <!-- User 1 -->
+                                                {% for u in users %}
                                                 <tr>
-                                                    <td>1</td>
+                                                    <td>{{ forloop.counter }}</td>
                                                     <td>
                                                         <div class="d-flex align-items-center">
-                                                            <img src="https://ui-avatars.com/api/?name=Sharifa+Ali&size=40&background=1A5C5A&color=fff" 
+                                                            <img src="https://ui-avatars.com/api/?name={{ u.full_name|urlencode }}&size=40&background=1A5C5A&color=fff" 
                                                                  class="rounded-circle me-2" 
                                                                  alt="User"
                                                                  style="width: 35px; height: 35px;">
                                                             <div>
-                                                                <strong>Sharifa Mohamed Ali</strong>
+                                                                <strong>{{ u.full_name|default:u.email }}</strong>
                                                             </div>
                                                         </div>
                                                     </td>
-                                                    <td>sharifaali927@gmail.com</td>
-                                                    <td><span class="badge bg-danger">Admin</span></td>
-                                                    <td>Jun 29, 2026</td>
+                                                    <td>{{ u.email }}</td>
                                                     <td>
-                                                        <button class="btn btn-sm btn-outline-danger" title="Delete">
-                                                            <i class="fas fa-trash"></i>
-                                                        </button>
+                                                        {% if u.role == 'counselor' %}
+                                                            <span class="badge bg-primary">Counselor</span>
+                                                        {% elif u.is_superuser or u.role == 'admin' %}
+                                                            <span class="badge bg-danger">Admin</span>
+                                                        {% else %}
+                                                            <span class="badge bg-secondary">User</span>
+                                                        {% endif %}
+                                                    </td>
+                                                    <td>{{ u.date_joined|date:"M d, Y" }}</td>
+                                                    <td>
+                                                        <form method="post" action="" style="display:inline">
+                                                            {% csrf_token %}
+                                                            <input type="hidden" name="action" value="delete">
+                                                            <input type="hidden" name="user_id" value="{{ u.pk }}">
+                                                            <button type="submit" class="btn btn-sm btn-outline-danger" title="Delete" {% if u == request.user or u.is_superuser %}disabled{% endif %}>
+                                                                <i class="fas fa-trash"></i>
+                                                            </button>
+                                                        </form>
                                                     </td>
                                                 </tr>
-                                                <!-- User 2 -->
-                                                <tr>
-                                                    <td>2</td>
-                                                    <td>
-                                                        <div class="d-flex align-items-center">
-                                                            <img src="https://ui-avatars.com/api/?name=Fadhil+Ali&size=40&background=1A5C5A&color=fff" 
-                                                                 class="rounded-circle me-2" 
-                                                                 alt="User"
-                                                                 style="width: 35px; height: 35px;">
-                                                            <div>
-                                                                <strong>Fadhil Mohammed Ali</strong>
-                                                            </div>
-                                                        </div>
-                                                    </td>
-                                                    <td>fadheel123@email.com</td>
-                                                    <td><span class="badge bg-danger">Admin</span></td>
-                                                    <td>Jun 29, 2026</td>
-                                                    <td>
-                                                        <button class="btn btn-sm btn-outline-danger" title="Delete">
-                                                            <i class="fas fa-trash"></i>
-                                                        </button>
-                                                    </td>
-                                                </tr>
-                                                <!-- User 3 -->
-                                                <tr>
-                                                    <td>3</td>
-                                                    <td>
-                                                        <div class="d-flex align-items-center">
-                                                            <img src="https://ui-avatars.com/api/?name=Amina+Omar&size=40&background=0DCAF0&color=fff" 
-                                                                 class="rounded-circle me-2" 
-                                                                 alt="User"
-                                                                 style="width: 35px; height: 35px;">
-                                                            <div>
-                                                                <strong>Amina Omar</strong>
-                                                            </div>
-                                                        </div>
-                                                    </td>
-                                                    <td>aminaomar553@email.com</td>
-                                                    <td><span class="badge bg-primary">Counselor</span></td>
-                                                    <td>Jun 30, 2026</td>
-                                                    <td>
-                                                        <button class="btn btn-sm btn-outline-danger" title="Delete">
-                                                            <i class="fas fa-trash"></i>
-                                                        </button>
-                                                    </td>
-                                                </tr>
-                                                <!-- User 4 -->
-                                                <tr>
-                                                    <td>4</td>
-                                                    <td>
-                                                        <div class="d-flex align-items-center">
-                                                            <img src="https://ui-avatars.com/api/?name=Asha+Ussi&size=40&background=FFC107&color=000" 
-                                                                 class="rounded-circle me-2" 
-                                                                 alt="User"
-                                                                 style="width: 35px; height: 35px;">
-                                                            <div>
-                                                                <strong>Asha Ussi</strong>
-                                                            </div>
-                                                        </div>
-                                                    </td>
-                                                    <td>ashaussi58@email.com</td>
-                                                    <td><span class="badge bg-secondary">User</span></td>
-                                                    <td>Jul 01, 2026</td>
-                                                    <td>
-                                                        <button class="btn btn-sm btn-outline-danger" title="Delete">
-                                                            <i class="fas fa-trash"></i>
-                                                        </button>
-                                                    </td>
-                                                </tr>
-                                                <!-- User 5 -->
-                                                <tr>
-                                                    <td>5</td>
-                                                    <td>
-                                                        <div class="d-flex align-items-center">
-                                                            <img src="https://ui-avatars.com/api/?name=Ussi+Haji&size=40&background=DC3545&color=fff" 
-                                                                 class="rounded-circle me-2" 
-                                                                 alt="User"
-                                                                 style="width: 35px; height: 35px;">
-                                                            <div>
-                                                                <strong>Ussi Haji</strong>
-                                                            </div>
-                                                        </div>
-                                                    </td>
-                                                    <td>ussihaji@email.com</td>
-                                                    <td><span class="badge bg-primary">Counselor</span></td>
-                                                    <td>Jul 02, 2026</td>
-                                                    <td>
-                                                        <button class="btn btn-sm btn-outline-danger" title="Delete">
-                                                            <i class="fas fa-trash"></i>
-                                                        </button>
-                                                    </td>
-                                                </tr>
-                                                <!-- User 6 -->
-                                                <tr>
-                                                    <td>6</td>
-                                                    <td>
-                                                        <div class="d-flex align-items-center">
-                                                            <img src="https://ui-avatars.com/api/?name=Zulekha+Issa&size=40&background=6F42C1&color=fff" 
-                                                                 class="rounded-circle me-2" 
-                                                                 alt="User"
-                                                                 style="width: 35px; height: 35px;">
-                                                            <div>
-                                                                <strong>Zulekha Issa</strong>
-                                                            </div>
-                                                        </div>
-                                                    </td>
-                                                    <td>zulisaa8678@email.com</td>
-                                                    <td><span class="badge bg-secondary">User</span></td>
-                                                    <td>Jul 03, 2026</td>
-                                                    <td>
-                                                        <button class="btn btn-sm btn-outline-danger" title="Delete">
-                                                            <i class="fas fa-trash"></i>
-                                                        </button>
-                                                    </td>
-                                                </tr>
-                                                <!-- User 7 -->
-                                                <tr>
-                                                    <td>7</td>
-                                                    <td>
-                                                        <div class="d-flex align-items-center">
-                                                            <img src="https://ui-avatars.com/api/?name=Ali+Juma&size=40&background=20C997&color=fff" 
-                                                                 class="rounded-circle me-2" 
-                                                                 alt="User"
-                                                                 style="width: 35px; height: 35px;">
-                                                            <div>
-                                                                <strong>Ali Juma</strong>
-                                                            </div>
-                                                        </div>
-                                                    </td>
-                                                    <td>alijuma@email.com</td>
-                                                    <td><span class="badge bg-secondary">User</span></td>
-                                                    <td>Jul 04, 2026</td>
-                                                    <td>
-                                                        <button class="btn btn-sm btn-outline-danger" title="Delete">
-                                                            <i class="fas fa-trash"></i>
-                                                        </button>
-                                                    </td>
-                                                </tr>
-                                                <!-- User 8 -->
-                                                <tr>
-                                                    <td>8</td>
-                                                    <td>
-                                                        <div class="d-flex align-items-center">
-                                                            <img src="https://ui-avatars.com/api/?name=Maryam+Sudi&size=40&background=FD7E14&color=fff" 
-                                                                 class="rounded-circle me-2" 
-                                                                 alt="User"
-                                                                 style="width: 35px; height: 35px;">
-                                                            <div>
-                                                                <strong>Maryam Sudi</strong>
-                                                            </div>
-                                                        </div>
-                                                    </td>
-                                                    <td>maryamsudi@email.com</td>
-                                                    <td><span class="badge bg-secondary">User</span></td>
-                                                    <td>Jul 05, 2026</td>
-                                                    <td>
-                                                        <button class="btn btn-sm btn-outline-danger" title="Delete">
-                                                            <i class="fas fa-trash"></i>
-                                                        </button>
-                                                    </td>
-                                                </tr>
+                                                {% empty %}
+                                                <tr><td colspan="6" class="text-center">No users found.</td></tr>
+                                                {% endfor %}
                                             </tbody>
                                         </table>
                                     </div>
