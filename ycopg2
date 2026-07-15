@@ -1,0 +1,5 @@
+ id |  text   |  category  | status |          created_at           | added_by_id 
+----+---------+------------+--------+-------------------------------+-------------
+  1 | success | motivation | active | 2026-07-15 02:09:21.973767-04 |           1
+(1 row)
+

@@ -20,9 +20,17 @@
                         <span class="badge bg-primary mb-2">{{ resource.type|capfirst }}</span>
                         <h5 class="card-title">{{ resource.title }}</h5>
                         <p class="card-text text-muted">{{ resource.description|truncatewords:20 }}</p>
-                        <a href="{{ resource.link }}" class="btn btn-outline-primary btn-sm" target="_blank">
-                            Read More <i class="fas fa-arrow-right"></i>
-                        </a>
+                        {% if resource.url %}
+                            <a href="{{ resource.url }}" class="btn btn-outline-primary btn-sm" target="_blank">
+                                Read More <i class="fas fa-arrow-right"></i>
+                            </a>
+                        {% elif resource.file %}
+                            <a href="{{ resource.file.url }}" class="btn btn-outline-primary btn-sm" target="_blank">
+                                Open File <i class="fas fa-arrow-right"></i>
+                            </a>
+                        {% else %}
+                            <span class="text-muted small">No link available</span>
+                        {% endif %}
                     </div>
                 </div>
             </div>

@@ -29,11 +29,10 @@ class RegisterSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = User
-        fields = ("email", "full_name", "password", "confirm_password", "terms", "role")
+        fields = ("email", "full_name", "password", "confirm_password", "terms")
         extra_kwargs = {"terms": {"write_only": True}}
 
     terms = serializers.BooleanField(write_only=True)
-    role = serializers.ChoiceField(choices=["user", "counselor"], default="user")
 
     def validate(self, attrs):
         if attrs.get("password") != attrs.get("confirm_password"):
@@ -46,6 +45,7 @@ class RegisterSerializer(serializers.ModelSerializer):
         validated_data.pop("confirm_password", None)
         validated_data.pop("terms", None)
         password = validated_data.pop("password")
+        validated_data["role"] = User.Role.USER
         user = User.objects.create_user(password=password, **validated_data)
         return user
 

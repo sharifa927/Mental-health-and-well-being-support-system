@@ -32,7 +32,7 @@ def register(request):
                 email=email,
                 password=password,
                 full_name=full_name,
-                role="user"
+                role=CustomUser.Role.USER
             )
             messages.success(request, "Account created successfully. Please log in.")
             return redirect("login")

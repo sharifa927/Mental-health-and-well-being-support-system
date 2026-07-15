@@ -139,8 +139,8 @@ def dashboard(request):
     
     # Get a random active quote
     try:
-        daily_quote = Quote.objects.filter(is_active=True).order_by('?').first()
-    except:
+        daily_quote = Quote.objects.filter(status=Quote.Status.ACTIVE).order_by('?').first()
+    except Exception:
         daily_quote = None
     
     # Get recent moods

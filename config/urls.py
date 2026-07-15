@@ -6,9 +6,10 @@ from django.utils.crypto import get_random_string
 
 # Import views from mental app
 from mental.views import (
-    dashboard, mood_tracker, assessment, book_appointment, 
-    appointments, counselors, resources
+    dashboard, mood_tracker, assessment, book_appointment,
+    appointments, counselors
 )
+from content.views import resources as content_resources, quotes as content_quotes
 
 
 # Views - connect URLs to HTML files
@@ -282,7 +283,8 @@ urlpatterns = [
     path('counselors/', counselors, name='counselors'),
     path('book-appointment/', book_appointment, name='book_appointment'),
     path('appointments/', appointments, name='appointments'),
-    path('resources/', resources, name='resources'),
+    path('resources/', content_resources, name='resources'),
+    path('quotes/', content_quotes, name='quotes'),
     
     # Admin pages
     path('admin-dashboard/', admin_dashboard, name='admin_dashboard'),
